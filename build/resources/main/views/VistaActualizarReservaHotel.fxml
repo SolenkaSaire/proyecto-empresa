@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="636.0" prefWidth="1074.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.proyecto.controllers.ActualizarRvaHotelController">
+   <children>
+      <AnchorPane prefHeight="618.0" prefWidth="1075.0">
+         <children>
+            <BorderPane layoutX="-8.0" layoutY="-1.0" prefHeight="590.0" prefWidth="1098.0" AnchorPane.bottomAnchor="49.0" AnchorPane.leftAnchor="-8.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="-1.0">
+               <top>
+                  <AnchorPane prefHeight="60.0" prefWidth="1065.0" stylesheets="@reservaDesign.css" BorderPane.alignment="CENTER">
+                     <children>
+                        <AnchorPane layoutX="7.0" prefHeight="63.0" prefWidth="1074.0" styleClass="bg-color-1" stylesheets="@reservaDesign.css">
+                           <children>
+                              <Button fx:id="btn_volver" layoutX="14.0" layoutY="17.0" mnemonicParsing="false" onAction="#volver" prefHeight="26.0" prefWidth="98.0" styleClass="btn-view" stylesheets="@loginDesign.css" text="Atrás" />
+                              <Label layoutX="129.0" layoutY="22.0" text="Turism Management System" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <ImageView fitHeight="26.0" fitWidth="38.0" layoutX="14.0" layoutY="17.0">
+                                 <image>
+                                    <Image url="@images/volver.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </AnchorPane>
+                        <Circle fill="DODGERBLUE" layoutX="983.0" layoutY="28.0" radius="20.0" stroke="WHITE" strokeType="INSIDE" AnchorPane.rightAnchor="97.0" />
+                        <Label layoutX="719.4000000000001" layoutY="23.0" prefHeight="18.0" prefWidth="92.0" styleClass="header-1" stylesheets="@reservaDesign.css" text="    Bienvenid@, " textFill="WHITE" AnchorPane.rightAnchor="271.0" />
+                        <Label layoutX="1010.0" layoutY="20.0" text="Activo" textFill="WHITE" AnchorPane.rightAnchor="56.4" />
+                        <Circle fill="#79d764" layoutX="1055.0" layoutY="29.0" radius="5.0" stroke="#79d764" strokeType="INSIDE" AnchorPane.rightAnchor="40.0" />
+                        <Label fx:id="fecha_actual_lbl" layoutX="563.2" layoutY="24.0" prefHeight="18.0" prefWidth="155.0" text="MM:DD:YYYYY" textAlignment="RIGHT" textFill="WHITE" AnchorPane.rightAnchor="364.0" />
+                        <Label fx:id="username_lbl" layoutX="811.4000000000001" layoutY="23.0" prefHeight="18.0" prefWidth="115.0" text="Solenka" textFill="WHITE" AnchorPane.rightAnchor="155.79999999999995">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <styleClass>
+                        <String fx:value="white-bg" />
+                        <String fx:value="border-top" />
+                     </styleClass>
+                  </AnchorPane>
+               </top>
+               <center>
+                  <AnchorPane layoutX="65.0" layoutY="102.0" prefHeight="579.0" prefWidth="1082.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <AnchorPane fx:id="reserva_hotel_form" layoutX="65.0" layoutY="102.0" prefHeight="576.0" prefWidth="1082.0" styleClass="white-bg" stylesheets="@reservaDesign.css" AnchorPane.bottomAnchor="-53.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <AnchorPane layoutX="21.0" layoutY="16.0" prefHeight="546.0" prefWidth="586.0" stylesheets="@reservaDesign.css">
+                                 <styleClass>
+                                    <String fx:value="shadow" />
+                                    <String fx:value="white-bg" />
+                                 </styleClass>
+                                 <children>
+                                    <GridPane layoutX="21.0" layoutY="32.0" prefHeight="135.0" prefWidth="266.0">
+                                       <columnConstraints>
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="132.20001220703125" minWidth="10.0" prefWidth="122.99998168945312" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="149.40001220703124" minWidth="10.0" prefWidth="143.00001831054686" />
+                                       </columnConstraints>
+                                       <rowConstraints>
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                       </rowConstraints>
+                                       <children>
+                                          <Label text="Regimen Hospedaje *:" GridPane.rowIndex="2" />
+                                          <ComboBox fx:id="gr_regimen_cbx" prefWidth="150.0" styleClass="combo-box" stylesheets="@reservaDesign.css" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                          <Label text="Seleccionar Cliente *:" />
+                                          <Label text="Seleccionar Hotel :*" GridPane.rowIndex="1" />
+                                          <ComboBox fx:id="gr_cliente_cbx" prefWidth="150.0" styleClass="combo-box" stylesheets="@reservaDesign.css" GridPane.columnIndex="1" />
+                                          <ComboBox fx:id="gr_hotel_cbx" onAction="#comboHotelesListener" prefWidth="150.0" styleClass="combo-box" stylesheets="@reservaDesign.css" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                          <Label text="Fecha CheckIn *:" GridPane.rowIndex="3" />
+                                          <DatePicker fx:id="gr_checkin_date" onAction="#dateCheckinListener" promptText="MM-DD-YYYY" styleClass="date-picker" stylesheets="@reservaDesign.css" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                       </children>
+                                    </GridPane>
+                                    <Button fx:id="gr_guardar_btn" layoutX="413.0" layoutY="198.0" mnemonicParsing="false" onAction="#guardarBtn" prefHeight="26.0" prefWidth="127.0" styleClass="update-btn" stylesheets="@reservaDesign.css" text="Guardar Cambios" />
+                                    <Label layoutX="21.0" layoutY="201.0" prefHeight="18.0" prefWidth="166.0" styleClass="header-1" stylesheets="@reservaDesign.css" text="Habitaciones Elegidas">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <TableView fx:id="gr_choose_tableview" layoutX="21.0" layoutY="235.0" onMouseClicked="#habitacionSelectData" prefHeight="294.0" prefWidth="542.0" stylesheets="@reservaDesign.css">
+                                       <columns>
+                                          <TableColumn fx:id="choose_id" prefWidth="31.20001220703125" text="ID " />
+                                          <TableColumn fx:id="choose_tipo" prefWidth="54.399993896484375" text="Tipo" />
+                                          <TableColumn fx:id="choose_capacidad" prefWidth="69.59999084472656" text="Capacidad" />
+                                          <TableColumn fx:id="choose_nivel" prefWidth="53.600006103515625" text="Nivel" />
+                                          <TableColumn fx:id="choose_precionoche" prefWidth="86.40000915527344" text="Precio Noche" />
+                                          <TableColumn fx:id="choose_cantidad" prefWidth="68.0" text="Cantidad" />
+                                          <TableColumn fx:id="choose_desc" prefWidth="81.5999755859375" text="Descripción" />
+                                          <TableColumn fx:id="choose_action" prefWidth="94.4000305175781" text="Acción" />
+                                       </columns>
+                                    </TableView>
+                                    <GridPane layoutX="311.0" layoutY="30.0" prefHeight="138.0" prefWidth="248.0">
+                                       <columnConstraints>
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="126.59996337890625" minWidth="10.0" prefWidth="110.19996337890625" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="180.00003662109373" minWidth="10.0" prefWidth="138.20003662109372" />
+                                       </columnConstraints>
+                                       <rowConstraints>
+                                          <RowConstraints maxHeight="73.60001220703126" minHeight="10.0" prefHeight="33.00000610351562" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="73.60001220703126" minHeight="10.0" prefHeight="32.00001831054687" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="73.60001220703126" minHeight="10.0" prefHeight="30.399981689453128" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="130.4" minHeight="10.0" prefHeight="33.000024414062494" vgrow="SOMETIMES" />
+                                       </rowConstraints>
+                                       <children>
+                                          <Label layoutX="10.0" layoutY="47.0" styleClass="header-1" stylesheets="@reservaDesign.css" text="Impuesto *:" GridPane.rowIndex="2">
+                                             <font>
+                                                <Font name="System Bold" size="13.0" />
+                                             </font></Label>
+                                          <Label styleClass="header-1" stylesheets="@reservaDesign.css" text="Precio Total *:" GridPane.rowIndex="3">
+                                             <font>
+                                                <Font name="System Bold" size="13.0" />
+                                             </font></Label>
+                                          <Label prefHeight="18.0" prefWidth="89.0" styleClass="header-1" stylesheets="@reservaDesign.css" text="Total días *:" GridPane.rowIndex="1">
+                                             <font>
+                                                <Font name="System Bold" size="13.0" />
+                                             </font></Label>
+                                          <Label fx:id="gr_totaldias_lbl" layoutX="10.0" layoutY="17.0" prefHeight="18.0" prefWidth="89.0" text="--" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="gr_impuesto_lbl" layoutX="10.0" layoutY="50.0" prefHeight="18.0" prefWidth="96.0" text="--" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="gr_preciototal_lbl" layoutX="10.0" layoutY="80.0" prefHeight="18.0" prefWidth="93.0" text="--" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <DatePicker fx:id="gr_checkout_date" onAction="#dateCheckoutListener" promptText="MM-DD-YYYY" styleClass="date-picker" stylesheets="@reservaDesign.css" GridPane.columnIndex="1" />
+                                          <Label text="Fecha CheckOut *:" />
+                                       </children>
+                                    </GridPane>
+                                    <Label layoutX="21.0" layoutY="11.0" styleClass="header-1" stylesheets="@reservaDesign.css" text="Actualizar Reserva Hotel">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane layoutX="616.0" layoutY="16.0" prefHeight="546.0" prefWidth="455.0" stylesheets="@reservaDesign.css">
+                                 <styleClass>
+                                    <String fx:value="shadow" />
+                                    <String fx:value="white-bg" />
+                                 </styleClass>
+                                 <children>
+                                    <Label layoutX="32.0" layoutY="14.0" prefHeight="18.0" prefWidth="166.0" styleClass="header-1" stylesheets="@reservaDesign.css" text="Habitaciones Disponibles">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <TableView fx:id="gr_habitaciones_tableview" layoutX="28.0" layoutY="55.0" onMouseClicked="#habitacionSelectData" prefHeight="469.0" prefWidth="400.0" stylesheets="@reservaDesign.css">
+                                       <columns>
+                                          <TableColumn fx:id="hab_id" prefWidth="49.60003662109375" text="ID " />
+                                          <TableColumn fx:id="hab_tipo" prefWidth="49.59991455078125" text="Tipo" />
+                                          <TableColumn fx:id="hab_capacidad" text="Capacidad" />
+                                          <TableColumn fx:id="hab_nivel" prefWidth="64.79998779296875" text="Nivel" />
+                                          <TableColumn fx:id="hab_precionoche" prefWidth="81.60003662109375" text="Precio Noche" />
+                                          <TableColumn fx:id="hab_action" prefWidth="72.79998779296875" text="Acción" />
+                                       </columns>
+                                    </TableView>
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
+               </center>
+            </BorderPane>
+         </children>
+      </AnchorPane>
+   </children>
+</StackPane>

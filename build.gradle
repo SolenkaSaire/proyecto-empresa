@@ -1,0 +1,49 @@
+plugins {
+    id 'org.springframework.boot' version '3.0.1'
+    id 'io.spring.dependency-management' version '1.1.0'
+    id 'java'
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.10'
+}
+group 'co.edu.uniquindio.proyecto'
+version '1.0-SNAPSHOT'
+description 'Proyecto de empresa de turismo para la materia bases de datos 2'
+sourceCompatibility = '17'
+mainClassName = 'co.edu.uniquindio.proyecto.ProyectoApplication'
+
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+repositories {
+    mavenCentral()
+}
+
+
+javafx {
+    version = "18"
+    modules = [ 'javafx.controls', 'javafx.fxml' ]
+}
+
+tasks.withType(JavaCompile) {
+    options.compilerArgs << "-Xlint:unchecked"
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf:'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    runtimeOnly 'com.oracle.database.jdbc:ojdbc8'
+}
+test {
+    useJUnitPlatform()
+}

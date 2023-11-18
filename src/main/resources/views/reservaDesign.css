@@ -1,0 +1,252 @@
+.white-bg {
+    -fx-background-color: #fff;
+}
+
+.border-top {
+    -fx-border-color: #000;
+    -fx-border-width: 0.5px 0 0.4px 0;
+}
+
+.header-1 {
+    -fx-border-color: linear-gradient(to bottom right, #0f6789, #286155);
+    -fx-border-width: 0 0 0 2px;
+    -fx-padding: 0 0 0 5px;
+}
+
+.header-2 {
+    -fx-border-color: linear-gradient(to bottom right, #ffffff, #ffffff);
+    -fx-border-width: 0 0 0 2px;
+    -fx-padding: 0 0 0 5px;
+}
+
+
+.radius {
+    -fx-background-radius: 5px;
+}
+
+.shadow {
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.5), 5, 0, 0, 0);
+}
+
+.bg-color-1 {
+    -fx-background-color: linear-gradient(to bottom right, #0f6789, #286155);
+}
+
+.btn-1 {
+    -fx-background-color: transparent;
+    -fx-border-color: #fff;
+    -fx-border-width: 0.5px;
+    -fx-text-fill: #fff;
+    -fx-font-family: Arial;
+    -fx-cursor: hand;
+    -fx-font-size: 13px;
+}
+
+.btn-1:hover {
+    -fx-background-color: #fff;
+    -fx-text-fill: #000;
+}
+
+.btn-1:armed {
+    -fx-background-color: #fff;
+    -fx-text-fill: #000;
+}
+
+.btn-view {
+    -fx-background-color: transparent;
+    -fx-border-color: #fff;
+    -fx-border-width: 1px;
+    -fx-text-fill: #fff;
+    -fx-font-family: Arial;
+    -fx-cursor: hand;
+    -fx-font-size: 13px;
+}
+
+.btn-view:hover {
+    -fx-background-color: #fff;
+    -fx-text-fill: #000;
+}
+
+.btn-view:armed {
+    -fx-background-color: #fff;
+    -fx-text-fill: #000;
+}
+
+.table-view {
+    -fx-padding: 0;
+    -fx-border-radius: 8px;
+    -fx-border-color: linear-gradient(to bottom right, #0f6789, #286155);
+}
+
+.table-row-cell {
+    -fx-border-color: linear-gradient(to bottom right, #0f6789, #286155);
+    -fx-border-width: 0.3px;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: linear-gradient(to bottom right, #0f6789, #286155);
+    -fx-background-insets: 0, 0, 1, 0;
+    -fx-background-radius: 8px 8px 0 0;
+}
+
+.table-view .column-header,
+.filter {
+    -fx-size: 40px;
+    -fx-background-color: transparent;
+    -fx-border-color: linear-gradient(to bottom right, #ffffff, #ffffff);
+    -fx-border-width: 0.3px;
+}
+
+.table-view .column-header .label {
+    -fx-font-size: 12px;
+    -fx-font-family: Arial;
+    -fx-font-weight: lighter;
+    -fx-text-fill: #fff;
+}
+
+
+
+
+.table2-view- {
+    -fx-padding: 0;
+    -fx-border-radius: 8px;
+    -fx-border-color: linear-gradient(to bottom right, #0f6789, #286155);
+}
+
+.table2-row-cell {
+    -fx-border-color: linear-gradient(to bottom right, #0f6789, #286155);
+    -fx-border-width: 0.3px;
+}
+
+.table2-view .column-header-background {
+    -fx-background-color: linear-gradient(to bottom right,#399a8f, #399a8f);
+    -fx-background-insets: 0, 0, 1, 0;
+    -fx-background-radius: 8px 8px 0 0;
+}
+
+.table2-view .column-header,
+.filter {
+    -fx-size: 30px;
+    -fx-background-color: transparent;
+    -fx-border-color: linear-gradient(to bottom right, #ffffff, #ffffff);
+    -fx-border-width: 0.3px;
+}
+
+.table2-view .column-header .label {
+    -fx-font-size: 12px;
+    -fx-font-family: Arial;
+    -fx-font-weight: lighter;
+    -fx-text-fill: #fff;
+}
+
+.combo-box {
+    -fx-background-color: #fff;
+    -fx-background-radius: 5px;
+    -fx-border-color: linear-gradient(to bottom right, #0f6789, #286155);
+    -fx-border-width: 0.8px;
+    -fx-border-radius: 5px;
+    -fx-font-size: 13px;
+    -fx-font-family: Arial;
+}
+
+.combo-box:focused {
+    -fx-border-color: linear-gradient(to bottom right, #0fb565, #399a8f);
+    -fx-border-width: 1.5px;
+}
+
+.add-btn {
+    -fx-background-color: linear-gradient(to bottom right, #0f6789, #388675);
+    -fx-background-radius: 5px;
+    -fx-cursor: hand;
+    -fx-text-fill: #fff;
+    -fx-font-family: Arial;
+    -fx-fond-size: 13px;
+    cursor: pointer; /* Add this line */
+}
+
+.add-btn:hover {
+    -fx-background-color: linear-gradient(to bottom right, #0fb565, #399a8f);
+}
+
+.update-btn {
+    -fx-background-color: linear-gradient(to bottom right, #0f6789, #388675);
+    -fx-background-radius: 5px;
+    -fx-cursor: hand;
+    -fx-text-fill: #fff;
+    -fx-font-family: Arial;
+    -fx-fond-size: 13px;
+    cursor: pointer; /* Add this line */
+}
+
+.update-btn:hover {
+    -fx-background-color: linear-gradient(to bottom right, #0fb565, #399a8f);
+}
+
+.delete-btn {
+    -fx-background-color: linear-gradient(to bottom right, #0f6789, #388675);
+    -fx-background-radius: 5px;
+    -fx-cursor: hand;
+    -fx-text-fill: #fff;
+    -fx-font-family: Arial;
+    -fx-fond-size: 13px;
+    cursor: pointer; /* Add this line */
+}
+
+.delete-btn:hover {
+    -fx-background-color: linear-gradient(to bottom right, #0fb565, #399a8f);
+}
+
+.search-btn {
+    -fx-background-color: linear-gradient(to bottom right, #0f6789, #388675);
+    -fx-background-radius: 5px;
+    -fx-cursor: hand;
+    -fx-text-fill: #fff;
+    -fx-font-family: Arial;
+    -fx-fond-size: 13px;
+    cursor: pointer; /* Add this line */
+}
+
+.search-btn:hover {
+    -fx-background-color: linear-gradient(to bottom right, #0fb565, #399a8f);
+}
+
+.textfield {
+    -fx-background-color: #fff;
+    -fx-background-radius: 8px;
+    -fx-border-color: linear-gradient(to right, #0f6789, #286155);
+    -fx-border-radius: 5px;
+    -fx-border-width: 0.8px;
+    -fx-font-size: 13px;
+}
+
+.textfield:focused {
+    -fx-border-color: linear-gradient(to right, #0fb565, #399a8f);
+    -fx-border-width: 1.5px;
+}
+
+.date-picker {
+    -fx-background-color: #fff;
+    -fx-background-radius: 5px;
+    -fx-border-color: linear-gradient(to right, #0f6789, #286155);
+    -fx-border-width: 0.8px;
+    -fx-border-radius: 5px;
+    -fx-font-size: 13px;
+    -fx-font-family: Arial;
+}
+
+.date-picker:focused {
+    -fx-border-color: linear-gradient(to right, #0fb565, #399a8f);
+    -fx-border-width: 1.5px;
+}
+
+.search {
+    -fx-border-color: linear-gradient(to right, #0fb565, #399a8f);
+    -fx-border-width: 0.8px;
+    -fx-font-family: Arial;
+    -fx-padding: 0 0 0 25px;
+}
+
+.search:focused {
+    -fx-border-color: linear-gradient(to bottom right, #0fb565, #399a8f);
+    -fx-border-width: 1px;
+}

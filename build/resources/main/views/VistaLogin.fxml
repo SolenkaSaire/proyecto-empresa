@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.proyecto.controllers.LoginController">
+    <children>
+        <AnchorPane prefHeight="650.0" prefWidth="650.0">
+            <children>
+                <AnchorPane fx:id="loginForm" layoutX="400.0" prefHeight="700.0" prefWidth="400.0" styleClass="white-form" stylesheets="@loginDesign.css">
+                    <children>
+                        <TextField fx:id="lo_email" layoutX="119.0" layoutY="252.0" prefHeight="35.0" prefWidth="190.0" promptText="Correo Electronico" styleClass="textField" stylesheets="@loginDesign.css" />
+                        <PasswordField fx:id="lo_password" layoutX="119.0" layoutY="378.0" prefHeight="35.0" prefWidth="190.0" promptText="Password" styleClass="textField" stylesheets="@loginDesign.css" />
+                        <Label layoutX="120.0" layoutY="103.0" styleClass="head-label" stylesheets="@loginDesign.css" text="Ventana Login" textFill="#0f6789">
+                            <font>
+                                <Font size="24.0" />
+                            </font>
+                        </Label>
+                        <Button fx:id="btn_ingresar" layoutX="133.0" layoutY="477.0" mnemonicParsing="false" onAction="#loginBtn" prefHeight="46.0" prefWidth="161.0" styleClass="login-btn" stylesheets="@loginDesign.css" text="Ingresar" />
+                        <ComboBox fx:id="lo_rol" layoutX="119.0" layoutY="189.0" prefHeight="35.0" prefWidth="190.0" promptText="Rol" styleClass="textField" stylesheets="@loginDesign.css" />
+                        <TextField fx:id="lo_cedula" layoutX="119.0" layoutY="314.0" prefHeight="35.0" prefWidth="190.0" promptText="Cedula" styleClass="textField" stylesheets="@loginDesign.css" />
+                    </children>
+                </AnchorPane>
+                <AnchorPane fx:id="signupform" prefHeight="700.0" prefWidth="400.0" styleClass="white-form" stylesheets="@loginDesign.css">
+                    <children>
+                        <TextField fx:id="re_nombre" layoutX="104.0" layoutY="301.0" prefHeight="35.0" prefWidth="190.0" promptText="Username" styleClass="textField" stylesheets="@loginDesign.css" />
+                        <PasswordField fx:id="re_password" layoutX="104.0" layoutY="511.0" prefHeight="35.0" prefWidth="190.0" promptText="Password" styleClass="textField" stylesheets="@loginDesign.css" />
+                        <Label layoutX="105.0" layoutY="101.0" styleClass="head-label" stylesheets="@loginDesign.css" text="Ventana Registro" textFill="#0f6789">
+                            <font>
+                                <Font size="24.0" />
+                            </font>
+                        </Label>
+                        <Button fx:id="btn_registrar" layoutX="138.0" layoutY="571.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="123.0" styleClass="login-btn" stylesheets="@loginDesign.css" text="Registrar" />
+                        <ComboBox fx:id="re_rol" layoutX="104.0" layoutY="186.0" prefHeight="35.0" prefWidth="190.0" promptText="Rol" styleClass="textField" stylesheets="@loginDesign.css" />
+                        <TextField fx:id="re_cedula" layoutX="105.0" layoutY="249.0" prefHeight="35.0" prefWidth="190.0" promptText="Cedula" styleClass="textField" stylesheets="@loginDesign.css" />
+                        <TextField fx:id="re_direccion" layoutX="104.0" layoutY="350.0" prefHeight="35.0" prefWidth="190.0" promptText="Direccion" styleClass="textField" stylesheets="@loginDesign.css" />
+                        <TextField fx:id="re_email" layoutX="104.0" layoutY="403.0" prefHeight="35.0" prefWidth="190.0" promptText="Correo Electronico" styleClass="textField" stylesheets="@loginDesign.css" />
+                        <TextField fx:id="re_telefono" layoutX="104.0" layoutY="459.0" prefHeight="35.0" prefWidth="190.0" promptText="Telefono" styleClass="textField" stylesheets="@loginDesign.css" />
+                    </children>
+                </AnchorPane>
+                <AnchorPane fx:id="side_form" prefHeight="700.0" prefWidth="400.0" styleClass="gradient" stylesheets="@loginDesign.css">
+                    <children>
+                        <Label fx:id="lbl_notienes" layoutX="115.0" layoutY="443.0" text="¿No tienes Cuenta?" textFill="WHITE">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <Button fx:id="btn_crearCuenta" layoutX="116.0" layoutY="482.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="46.0" prefWidth="150.0" styleClass="create-btn" stylesheets="@loginDesign.css" text="Crear Cuenta" />
+                        <Button fx:id="btn_yatengo" layoutX="100.0" layoutY="482.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="46.0" prefWidth="178.0" styleClass="create-btn" stylesheets="@loginDesign.css" text="Ingresar" visible="false" />
+                        <ImageView fitHeight="270.0" fitWidth="288.0" layoutX="48.0" layoutY="104.0">
+                            <image>
+                                <Image url="@images/sesion.png" />
+                            </image>
+                        </ImageView>
+                        <Label layoutX="48.0" layoutY="104.0" prefHeight="35.0" prefWidth="303.0" text="Turism Management System" textFill="WHITE">
+                            <font>
+                                <Font size="24.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="lbl_yatienes" layoutX="115.0" layoutY="443.0" text="¿Ya tienes Cuenta?" textFill="WHITE" visible="false">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </AnchorPane>
+            </children>
+        </AnchorPane>
+    </children>
+</StackPane>

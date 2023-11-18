@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="643.0" prefWidth="1091.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.proyecto.controllers.ReservaHotelController">
+    <children>
+        <AnchorPane prefHeight="721.0" prefWidth="1091.0">
+            <children>
+                <BorderPane layoutX="-1.0" layoutY="55.0" prefHeight="643.0" prefWidth="1099.0" AnchorPane.bottomAnchor="56.0" AnchorPane.leftAnchor="-1.0" AnchorPane.rightAnchor="-7.0" AnchorPane.topAnchor="55.0">
+                    <top>
+                        <AnchorPane prefHeight="57.0" prefWidth="1102.0" stylesheets="@reservaDesign.css" BorderPane.alignment="CENTER">
+                            <children>
+                                <AnchorPane prefHeight="58.0" prefWidth="215.0" styleClass="bg-color-1" stylesheets="@reservaDesign.css">
+                                    <children>
+                                        <Label layoutX="19.0" layoutY="19.0" text="Turism Management System" textFill="WHITE">
+                                            <font>
+                                                <Font size="14.0" />
+                                            </font>
+                                        </Label>
+                                    </children>
+                                </AnchorPane>
+                                <Circle fill="DODGERBLUE" layoutX="983.0" layoutY="28.0" radius="20.0" stroke="WHITE" strokeType="INSIDE" AnchorPane.rightAnchor="97.0" />
+                                <Label layoutX="771.0" layoutY="20.0" prefHeight="18.0" prefWidth="92.0" styleClass="header-1" stylesheets="@reservaDesign.css" text="    Bienvenid@, " AnchorPane.rightAnchor="271.0" />
+                                <Label layoutX="1010.0" layoutY="20.0" text="Activo" AnchorPane.rightAnchor="56.4" />
+                                <Circle fill="#79d764" layoutX="1055.0" layoutY="29.0" radius="5.0" stroke="#79d764" strokeType="INSIDE" AnchorPane.rightAnchor="40.0" />
+                                <Label fx:id="fecha_actual_lbl" layoutX="649.0" layoutY="20.0" prefHeight="18.0" prefWidth="155.0" text="MM:DD:YYYYY" textAlignment="RIGHT" AnchorPane.rightAnchor="364.0" />
+                                <Label fx:id="username_lbl" layoutX="829.0" layoutY="20.0" prefHeight="18.0" prefWidth="115.0" text="Solenka" AnchorPane.rightAnchor="155.79999999999995">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                </Label>
+                                <Label fx:id="current_ventana_lbl" layoutX="227.0" layoutY="19.0" prefHeight="18.0" prefWidth="221.0" styleClass="header-1" stylesheets="@reservaDesign.css" text="Ventana Reservas de Hotel" textAlignment="CENTER">
+                                    <font>
+                                        <Font size="14.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                            <styleClass>
+                                <String fx:value="white-bg" />
+                                <String fx:value="border-top" />
+                            </styleClass>
+                        </AnchorPane>
+                    </top>
+                    <left>
+                        <AnchorPane prefHeight="624.0" prefWidth="215.0" styleClass="bg-color-1" stylesheets="@reservaDesign.css" BorderPane.alignment="CENTER">
+                            <children>
+                                <Label layoutX="25.0" layoutY="182.0" text="Empleado ID:" textFill="WHITE" />
+                                <Label layoutX="25.0" layoutY="208.0" text="Nombre:" textFill="WHITE" />
+                                <Label fx:id="menu_userID_lbl" layoutX="104.0" layoutY="182.0" text="1" textFill="WHITE">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                </Label>
+                                <Label fx:id="menu_user_lbl" layoutX="75.0" layoutY="208.0" text="Prueba" textFill="WHITE">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                </Label>
+                                <Line endX="100.0" layoutX="107.0" layoutY="234.0" startX="-100.0" stroke="WHITE" />
+                                <Label layoutX="25.0" layoutY="244.0" text="Menú" textFill="WHITE" />
+                                <Button fx:id="menu_rva_hotel_btn" layoutX="4.0" layoutY="269.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="43.0" prefWidth="205.0" styleClass="btn-1" stylesheets="@reservaDesign.css" text="Reservas Hoteles" />
+                                <Button fx:id="menu_rva_autos_btn" layoutX="4.0" layoutY="319.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="43.0" prefWidth="205.0" styleClass="btn-1" stylesheets="@reservaDesign.css" text="Reservas Automoviles" />
+                                <Button fx:id="menu_cpa_paq_btn" layoutX="4.0" layoutY="368.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="43.0" prefWidth="205.0" styleClass="btn-1" stylesheets="@reservaDesign.css" text="Compra Paquetes" />
+                                <Button fx:id="menu_cpa_arti_btn" layoutX="4.0" layoutY="417.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="43.0" prefWidth="205.0" styleClass="btn-1" stylesheets="@reservaDesign.css" text="Compra Articulos" />
+                                <Label layoutX="25.0" layoutY="467.0" text="Reportes" textFill="WHITE" />
+                                <Button fx:id="rep_rva" layoutX="4.0" layoutY="492.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="205.0" styleClass="btn-1" stylesheets="@reservaDesign.css" text="Reportes Reservas" />
+                                <Button fx:id="rep_cpa" layoutX="4.0" layoutY="540.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="205.0" styleClass="btn-1" stylesheets="@reservaDesign.css" text="Reservas Compras" />
+                                <ImageView fitHeight="138.0" fitWidth="138.0" layoutX="38.0" layoutY="23.0">
+                                    <image>
+                                        <Image url="@images/user.png" />
+                                    </image>
+                                </ImageView>
+                            </children>
+                        </AnchorPane>
+                    </left>
+                    <center>
+                        <AnchorPane layoutX="65.0" layoutY="102.0" prefHeight="665.0" prefWidth="910.0" BorderPane.alignment="CENTER">
+                            <children>
+                                <AnchorPane fx:id="reserva_hotel_form" layoutX="65.0" layoutY="102.0" prefHeight="650.0" prefWidth="899.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-4.0" AnchorPane.topAnchor="0.0">
+                                    <children>
+                                        <AnchorPane layoutX="9.0" layoutY="9.0" prefHeight="62.0" prefWidth="814.0" stylesheets="@reservaDesign.css" AnchorPane.leftAnchor="9.0" AnchorPane.rightAnchor="31.0" AnchorPane.topAnchor="9.0">
+                                            <styleClass>
+                                                <String fx:value="shadow" />
+                                                <String fx:value="white-bg" />
+                                            </styleClass>
+                                            <children>
+                                                <Button fx:id="gr_crear_btn" layoutX="243.0" layoutY="17.0" mnemonicParsing="false" onAction="#crearBtn" prefHeight="26.0" prefWidth="96.0" styleClass="add-btn" stylesheets="@reservaDesign.css" text="Crear" />
+                                                <Button fx:id="gr_modificar_btn" layoutX="508.0" layoutY="17.0" mnemonicParsing="false" onAction="#actualizarBtn" prefHeight="26.0" prefWidth="97.0" styleClass="update-btn" stylesheets="@reservaDesign.css" text="Modificar" />
+                                                <Button fx:id="gr_buscar_btn" layoutX="373.0" layoutY="17.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="96.0" styleClass="search-btn" stylesheets="@reservaDesign.css" text="Buscar" />
+                                                <Button fx:id="gr_eliminar_btn" layoutX="639.0" layoutY="17.0" mnemonicParsing="false" onAction="#eliminarBtn" prefHeight="26.0" prefWidth="100.0" styleClass="delete-btn" stylesheets="@reservaDesign.css" text="Eliminar" />
+                                                <Label layoutX="22.0" layoutY="20.0" styleClass="header-1" stylesheets="@reservaDesign.css" text="Gestionar Reservas">
+                                                    <font>
+                                                        <Font size="14.0" />
+                                                    </font></Label>
+                                            </children>
+                                        </AnchorPane>
+                                        <AnchorPane layoutX="9.0" layoutY="81.0" prefHeight="494.0" prefWidth="813.0" stylesheets="@reservaDesign.css" AnchorPane.bottomAnchor="13.0" AnchorPane.leftAnchor="9.0" AnchorPane.rightAnchor="32.0" AnchorPane.topAnchor="81.0">
+                                            <styleClass>
+                                                <String fx:value="shadow" />
+                                                <String fx:value="white-bg" />
+                                            </styleClass>
+                                            <children>
+                                                <Label layoutX="21.0" layoutY="13.0" styleClass="header-1" stylesheets="@reservaDesign.css" text="Reservas encontradas">
+                                                    <font>
+                                                        <Font size="14.0" />
+                                                    </font></Label>
+                                                <TableView fx:id="reserva_tableview" layoutX="21.0" layoutY="45.0" onMouseClicked="#reservaHotelSelectData" prefHeight="345.0" prefWidth="634.0" stylesheets="@reservaDesign.css" AnchorPane.bottomAnchor="13.399999999999977" AnchorPane.leftAnchor="21.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="45.0">
+                                                    <columns>
+                                                        <TableColumn fx:id="rva_id" prefWidth="36.26667785644531" text="ID" />
+                                                        <TableColumn fx:id="rva_cliente" prefWidth="74.40005493164062" text="Cliente" />
+                                                        <TableColumn fx:id="rva_hotel" prefWidth="57.60003662109375" text="Hotel" />
+                                                        <TableColumn fx:id="rva_rgmn" prefWidth="131.1999969482422" text="Regimen Hospedaje" />
+                                                        <TableColumn fx:id="rva_fecha" prefWidth="100.00006103515625" text="Fecha Reserva" />
+                                                        <TableColumn fx:id="rva_checkin" prefWidth="70.4000244140625" text="CheckIn" />
+                                                        <TableColumn fx:id="rva_checkout" prefWidth="74.39996337890625" text="CheckOut" />
+                                                        <TableColumn fx:id="rva_total_imp" prefWidth="120.0" text="Total con impuestos" />
+                                                        <TableColumn fx:id="rva_cantidad_hab" prefWidth="86.39990234375" text="Cantidad Habitaciones" />
+                                                        <TableColumn fx:id="rva_estado" prefWidth="67.2000732421875" text="Estado" />
+                                                    </columns>
+                                                    <columnResizePolicy>
+                                                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                                    </columnResizePolicy>
+                                                    <styleClass>
+                                                        <String fx:value="table-row-cell" />
+                                                        <String fx:value="table-view" />
+                                                        <String fx:value="shadow" />
+                                                    </styleClass>
+                                                </TableView>
+                                                <GridPane layoutX="403.0" layoutY="3.0" prefHeight="47.0" prefWidth="409.0">
+                                                    <columnConstraints>
+                                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="112.19998168945312" minWidth="10.0" prefWidth="44.733349609375" />
+                                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="195.19998779296873" minWidth="10.0" prefWidth="160.59999999999997" />
+                                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="195.19998779296873" minWidth="10.0" prefWidth="58.19999999999999" />
+                                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="195.19998779296873" minWidth="10.0" prefWidth="125.73329467773434" />
+                                                    </columnConstraints>
+                                                    <rowConstraints>
+                                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                    </rowConstraints>
+                                                    <children>
+                                                        <Label text="País :*" />
+                                                        <ComboBox fx:id="gr_pais_cbx" onAction="#comboPaisHotelListener" prefHeight="26.0" prefWidth="135.0" styleClass="combo-box" stylesheets="@reservaDesign.css" GridPane.columnIndex="1" />
+                                                        <ComboBox fx:id="gr_ciudad_cbx" prefWidth="150.0" styleClass="combo-box" stylesheets="@reservaDesign.css" GridPane.columnIndex="3" />
+                                                        <Label text="Ciudad :*" GridPane.columnIndex="2" />
+                                                    </children>
+                                                </GridPane>
+                                                <TextField fx:id="gr_search_field" layoutX="199.0" layoutY="13.0" onAction="#reservaSearch" prefHeight="26.0" prefWidth="185.0" promptText="Buscar" styleClass="search" stylesheets="@reservaDesign.css" />
+                                                <ImageView fitHeight="19.0" fitWidth="20.0" layoutX="203.0" layoutY="17.0">
+                                                    <image>
+                                                        <Image url="@images/search-icon.png" />
+                                                    </image>
+                                                </ImageView>
+                                            </children>
+                                        </AnchorPane>
+                                    </children>
+                                </AnchorPane>
+                            </children>
+                        </AnchorPane>
+                    </center>
+                </BorderPane>
+            </children>
+        </AnchorPane>
+    </children>
+</StackPane>
