@@ -102,7 +102,7 @@
                                  </styleClass>
                                  <children>
                                     <Button fx:id="ga_crear_btn" layoutX="252.0" layoutY="17.0" mnemonicParsing="false" onAction="#crearBtn" prefHeight="26.0" prefWidth="96.0" styleClass="add-btn" stylesheets="@reservaDesign.css" text="Crear" />
-                                    <Button fx:id="ga_modificar_btn" layoutX="529.0" layoutY="17.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="97.0" styleClass="update-btn" stylesheets="@reservaDesign.css" text="Modificar" />
+                                    <Button fx:id="ga_modificar_btn" layoutX="529.0" layoutY="17.0" mnemonicParsing="false" onAction="#actualizarBtn" prefHeight="26.0" prefWidth="97.0" styleClass="update-btn" stylesheets="@reservaDesign.css" text="Modificar" />
                                     <Button fx:id="ga_buscar_btn" layoutX="396.0" layoutY="17.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="96.0" styleClass="search-btn" stylesheets="@reservaDesign.css" text="Buscar" />
                                     <Button fx:id="ga_eliminar_btn" layoutX="658.0" layoutY="17.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="100.0" styleClass="delete-btn" stylesheets="@reservaDesign.css" text="Eliminar" />
                                     <Label layoutX="21.0" layoutY="10.0" styleClass="header-1" stylesheets="@reservaDesign.css" text="Gestionar Reservas Automoviles">
@@ -123,7 +123,7 @@
                                           <Font size="14.0" />
                                        </font>
                                     </Label>
-                                    <TableView fx:id="rvautos_tableview" layoutX="21.0" layoutY="45.0" prefHeight="345.0" prefWidth="634.0" stylesheets="@reservaDesign.css" AnchorPane.bottomAnchor="13.399999999999977" AnchorPane.leftAnchor="21.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="45.0">
+                                    <TableView fx:id="rvautos_tableview" layoutX="21.0" layoutY="45.0" onMouseClicked="#reservaAutoSelectData" prefHeight="345.0" prefWidth="634.0" stylesheets="@reservaDesign.css" AnchorPane.bottomAnchor="13.399999999999977" AnchorPane.leftAnchor="21.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="45.0">
                                        <columns>
                                           <TableColumn fx:id="rvautos_id" prefWidth="36.26667785644531" text="ID" />
                                           <TableColumn fx:id="rvautos_cliente" prefWidth="61.5999755859375" text="Cliente" />

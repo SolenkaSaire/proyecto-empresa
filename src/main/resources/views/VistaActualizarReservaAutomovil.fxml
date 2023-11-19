@@ -92,7 +92,7 @@
                                           <DatePicker fx:id="ga_fechainicio_date" onAction="#dateCheckinListener" promptText="MM-DD-YYYY" styleClass="date-picker" stylesheets="@reservaDesign.css" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                        </children>
                                     </GridPane>
-                                    <Button fx:id="gr_guardar_btn" layoutX="415.0" layoutY="192.0" mnemonicParsing="false" onAction="#crearBtn" prefHeight="26.0" prefWidth="127.0" styleClass="update-btn" stylesheets="@reservaDesign.css" text="Crear Reserva" />
+                                    <Button fx:id="gr_guardar_btn" layoutX="415.0" layoutY="192.0" mnemonicParsing="false" onAction="#guardarBtn" prefHeight="26.0" prefWidth="127.0" styleClass="update-btn" stylesheets="@reservaDesign.css" text="Guardar Cambios" />
                                     <Label layoutX="17.0" layoutY="190.0" prefHeight="18.0" prefWidth="166.0" styleClass="header-1" stylesheets="@reservaDesign.css" text="Autos Elegidos">
                                        <font>
                                           <Font size="14.0" />

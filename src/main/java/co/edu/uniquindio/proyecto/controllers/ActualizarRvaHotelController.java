@@ -180,6 +180,7 @@ public class ActualizarRvaHotelController implements Initializable {
 
     @FXML
     void guardarBtn(ActionEvent event) {
+
         verificarReservaHotel();
     }
 
@@ -269,6 +270,8 @@ public class ActualizarRvaHotelController implements Initializable {
 
 
     private ReservaHotel actualizarReservaHotel() {
+
+
         String idCliente = obtenerIdCliente();
         String idHotelSeleccionado = obtenerIdHotelSeleccionado();
         String idRegimenSeleccionado = obtenerIdRegimenSeleccionado();

@@ -469,7 +469,7 @@ public class CrearReservaAutoController implements Initializable {
 
     private void abrirVentanaVolver(ActionEvent event, Empleado empleado) {
 
-        sceneController.cambiarAVentanaReservaHotel(event, empleado);
+        sceneController.cambiarAVentanaReservaAuto(event, empleado);
     }
 
     @FXML

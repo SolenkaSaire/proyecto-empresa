@@ -1,5 +1,6 @@
 package co.edu.uniquindio.proyecto.controllers;
 
+import co.edu.uniquindio.proyecto.dto.ReservaAutoData;
 import co.edu.uniquindio.proyecto.dto.ReservaHotelData;
 import co.edu.uniquindio.proyecto.dto.ServiciosAdicionalesData;
 import co.edu.uniquindio.proyecto.model.Empleado;
@@ -248,4 +249,27 @@ public class SceneController {
     }
 
 
+    public void cambiarAVentanaActualizarReservaAuto(ActionEvent event, Empleado empleadoLogin, ReservaAutoData reservaActualizar) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/VistaActualizarReservaAutomovil.fxml"));
+            loader.setControllerFactory(springContext::getBean);
+            Parent root = loader.load();
+
+            ActualizarReservaAutoController controlador = loader.getController();
+            controlador.displayEmployeeIDUsername(empleadoLogin, reservaActualizar);
+
+            Stage stage = new Stage();
+            Scene scene = new Scene(root);
+
+            stage.setTitle("Turism Management System - Actualizar Reserva Hotel");
+            stage.setMinHeight(700);
+            stage.setMinWidth(1100);
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException e) {
+
+            e.printStackTrace();
+        }
+    }
 }

@@ -12,10 +12,11 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,15 +46,10 @@ import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -77,9 +73,18 @@ public class ReservaAutoController  implements Initializable{
     private SceneController sceneController;
    @Autowired
     private ReservaAutoRepo reservaAutoRepo;
-    Empleado empleadoLogin;
-    public ObservableList<ReservaAutoData> reservaAutoData = FXCollections.observableArrayList();
+
+   private ReservaAutomovil reservaSeleccionada;
+
+    private ReservaAutoData reserva;
+    private Empleado empleadoLogin;
+
+
+    private static final String VALIDACION_DATOS = "Validacion de datos";
+
     private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+    public ObservableList<ReservaAutoData> reservaAutoData = FXCollections.observableArrayList();
     @FXML
     private Label current_ventana_lbl;
     @FXML
@@ -377,6 +382,25 @@ public class ReservaAutoController  implements Initializable{
 
     }
 
+
+
+
+    @FXML
+    void reservaAutoSelectData(MouseEvent event) {
+        reserva = rvautos_tableview.getSelectionModel().getSelectedItem();
+
+        if (reserva != null) {
+            reservaSeleccionada = reservaAutoRepo.findById(Integer.valueOf(reserva.getId_reserva())).get();
+            System.out.println("reserva seleccionada: " + reservaSeleccionada.toString());
+        }
+        int num = rvautos_tableview.getSelectionModel().getSelectedIndex();
+        if ((num - 1) < -1) {
+            return;
+        }
+
+    }
+
+
     /**
      * Inicia un nuevo hilo que actualiza la etiqueta fecha_actual_lbl con la fecha y hora actuales cada segundo.
      */
@@ -399,6 +423,9 @@ public class ReservaAutoController  implements Initializable{
         }.start();
     }
 
+
+
+
     @FXML
     void crearBtn(ActionEvent event) {
         abrirVentanaCrearReservaAuto(event, empleadoLogin);
@@ -408,6 +435,34 @@ public class ReservaAutoController  implements Initializable{
 
     private void abrirVentanaCrearReservaAuto(ActionEvent event, Empleado empleado) {
         sceneController.cambiarAVentanaCrearReservaAuto(event, empleado);
+    }
+
+
+    @FXML
+    void actualizarBtn(ActionEvent event) {
+        //validar que se haya seleccionado una reserva
+        if (reserva != null) {
+            //actualizarReservaHotel();
+            abrirVentanaActualizarReservaAuto(event, empleadoLogin, reserva);
+            ga_modificar_btn.getScene().getWindow().hide();
+        } else {
+            mostrarMensaje(VALIDACION_DATOS, VALIDACION_DATOS, "Por favor, seleccione una reserva para actualizar",
+                    Alert.AlertType.WARNING);
+        }
+
+    }
+
+    private void abrirVentanaActualizarReservaAuto(ActionEvent event, Empleado empleadoLogin, ReservaAutoData reservaAux) {
+        sceneController.cambiarAVentanaActualizarReservaAuto(event, empleadoLogin, reservaAux);
+    }
+
+
+    private void mostrarMensaje(String titulo, String header, String contenido, Alert.AlertType information) {
+        Alert alert = new Alert(information);
+        alert.setTitle(titulo);
+        alert.setHeaderText(header);
+        alert.setContentText(contenido);
+        alert.showAndWait();
     }
 
     @FXML
