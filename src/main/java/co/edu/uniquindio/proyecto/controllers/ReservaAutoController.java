@@ -214,7 +214,6 @@ public class ReservaAutoController  implements Initializable{
     private Label username_lbl;
 
     private Map<String, Integer> mapaPaises = new HashMap<>();
-
     private HashMap<String, String> mapaCiudades;
     private HashMap<String, String[]> mapaClientes;
     private HashMap<String, String[]> mapaHoteles;
@@ -400,7 +399,16 @@ public class ReservaAutoController  implements Initializable{
         }.start();
     }
 
+    @FXML
+    void crearBtn(ActionEvent event) {
+        abrirVentanaCrearReservaAuto(event, empleadoLogin);
+        ga_crear_btn.getScene().getWindow().hide();
 
+    }
+
+    private void abrirVentanaCrearReservaAuto(ActionEvent event, Empleado empleado) {
+        sceneController.cambiarAVentanaCrearReservaAuto(event, empleado);
+    }
 
     @FXML
     public void initialize(URL location, ResourceBundle resources) {

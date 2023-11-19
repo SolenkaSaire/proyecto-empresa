@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="718.0" maxWidth="875.0" minHeight="496.0" minWidth="875.0" prefHeight="512.0" prefWidth="875.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.proyecto.controllers.ServiciosAutomovilController">
+   <children>
+      <AnchorPane layoutX="440.0" layoutY="68.0" prefHeight="432.0" prefWidth="427.0" stylesheets="@reservaDesign.css">
+         <styleClass>
+            <String fx:value="shadow" />
+            <String fx:value="white-bg" />
+         </styleClass>
+         <children>
+            <Label layoutX="16.0" layoutY="14.0" prefHeight="20.0" prefWidth="254.0" styleClass="header-1" stylesheets="@reservaDesign.css" text="Servicios Disponibles para tu Reserva">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <TableView fx:id="gs_servicios_tableview" layoutX="16.0" layoutY="47.0" prefHeight="370.0" prefWidth="398.0" stylesheets="@reservaDesign.css">
+               <columns>
+                  <TableColumn fx:id="servicio_id" prefWidth="66.4000244140625" text="ID Tipo" />
+                  <TableColumn fx:id="servicio_nombre" prefWidth="53.5999755859375" text="Nombre" />
+                  <TableColumn fx:id="servicio_info" prefWidth="134.4000244140625" text="Información" />
+                  <TableColumn fx:id="servicio_precio" prefWidth="63.199951171875" text="Precio" />
+                  <TableColumn fx:id="servicio_action" prefWidth="79.199951171875" text="Acción" />
+               </columns>
+            </TableView>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="7.0" layoutY="65.0" prefHeight="437.0" prefWidth="422.0" stylesheets="@reservaDesign.css">
+         <styleClass>
+            <String fx:value="shadow" />
+            <String fx:value="white-bg" />
+         </styleClass>
+         <children>
+            <Button fx:id="gr_guardarservicios_btn" layoutX="260.0" layoutY="11.0" mnemonicParsing="false" onAction="#crearBtn" prefHeight="26.0" prefWidth="127.0" styleClass="update-btn" stylesheets="@reservaDesign.css" text="Guardar Cambios" />
+            <Label layoutX="11.0" layoutY="14.0" styleClass="header-1" stylesheets="@reservaDesign.css" text="Servicios Adicionales elegidos ">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <TableView fx:id="gs_choose_tableview" layoutX="11.0" layoutY="48.0" prefHeight="373.0" prefWidth="398.0" stylesheets="@reservaDesign.css">
+               <columns>
+                  <TableColumn fx:id="choose_id" prefWidth="44.800048828125" text="ID Tipo" />
+                  <TableColumn fx:id="choose_nombre" prefWidth="73.60003662109375" text="Nombre" />
+                  <TableColumn fx:id="choose_info" text="Información" />
+                  <TableColumn fx:id="choose_precio" prefWidth="54.40003967285156" text="Precio" />
+                  <TableColumn fx:id="choose_desc" prefWidth="80.79998779296875" text="Descripción" />
+                  <TableColumn fx:id="choose_action" prefWidth="61.60003662109375" text="Acción" />
+               </columns>
+            </TableView>
+         </children>
+      </AnchorPane>
+      <AnchorPane prefHeight="55.0" prefWidth="875.0" styleClass="bg-color-1" stylesheets="@reservaDesign.css" />
+   </children>
+</AnchorPane>

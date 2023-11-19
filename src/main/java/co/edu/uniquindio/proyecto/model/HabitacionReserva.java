@@ -22,6 +22,8 @@ public class HabitacionReserva implements Serializable {
     @EqualsAndHashCode.Include
     private ReservaHotel reserva;
 
+
+
     @Id
     @ManyToOne
     @JoinColumn(name = "HAB_ID_HAB", nullable = false)

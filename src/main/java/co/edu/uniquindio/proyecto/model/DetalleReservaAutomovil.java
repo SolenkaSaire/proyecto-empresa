@@ -4,21 +4,22 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
 @Table(name = "DETALLE_RESERVA_AUTOMOVIL", schema = "PY_EP")
+@IdClass(DetalleReservaAutoKey.class)
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@ToString
 public class DetalleReservaAutomovil implements Serializable {
 
     @Id
     @ManyToOne
-    @JoinColumn(name = "ID_RVA_AUTO", nullable = false)
+    @JoinColumn(name = "ID_RVA_AUTO")
     @EqualsAndHashCode.Include
     private ReservaAutomovil reservaAutomovil;
 
@@ -29,13 +30,27 @@ public class DetalleReservaAutomovil implements Serializable {
     private Automovil automovil;
 
     @Column(name = "CANTIDAD", nullable = false)
-    private int cantidad;
+    private Integer cantidad;
 
     @Column(name = "PRECIO_DIA", nullable = false)
-    private double precioDia;
-
+    private Double precioDia;
+/*
     @Column(name = "FECHA", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date fecha;
+*/
+    @Column(name = "FECHA", nullable = false)
+    private LocalDate fecha;
 
+
+    @Override
+    public String toString() {
+        return "Detalle Reserva Automovil: " + "\n" +
+                "   reservaAutomovil = " + reservaAutomovil.getIdReservaAutomovil() + ",\n" +
+                "   automovil = " + automovil.getIdAutomovil() + ",\n" +
+                "   cantidad = " + cantidad + ",\n" +
+                "   precioDia = " + precioDia + ",\n" +
+                "   fecha = " + fecha + "\n" +
+                "";
+    }
 }

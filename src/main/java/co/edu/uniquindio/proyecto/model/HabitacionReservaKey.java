@@ -55,7 +55,6 @@ public class HabitacionReservaKey implements Serializable {
         return result;
     }
 
-
     public String toString() {
         return "HabitacionReservaKey(reserva=" + this.getReserva() + ", habitacion=" + this.getHabitacion() + ")";
     }

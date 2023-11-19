@@ -30,8 +30,8 @@ public class ProyectoApplication extends Application {
         loader.setControllerFactory(springContext::getBean);
         StackPane rootLayout = loader.load();
         Scene scene = new Scene(rootLayout);
-        stage.setMinHeight(700);
-        stage.setMinWidth(800);
+      //  stage.setMinHeight(700);
+      //  stage.setMinWidth(800);
         stage.setScene(scene);
         stage.setTitle("Tourism Management System");
         stage.show();

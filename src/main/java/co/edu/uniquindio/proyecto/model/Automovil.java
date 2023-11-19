@@ -43,6 +43,10 @@ public class Automovil implements Serializable {
     @JoinColumn(name = "MARCA_ID_MARCA", referencedColumnName = "ID_MARCA", insertable = false, updatable = false)
     private Marca marca;
 
+    @ManyToOne
+    @JoinColumn(name = "GAMA_ID_GAMA", referencedColumnName = "ID_GAMA", insertable = false, updatable = false)
+    private Gama gama;
+
 
 
 }

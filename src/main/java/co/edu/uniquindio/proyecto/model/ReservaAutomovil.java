@@ -15,11 +15,12 @@ import java.util.Date;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString
 public class ReservaAutomovil implements Serializable {
-
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "reservaAutomovil_seq")
+    @SequenceGenerator(name = "reservaAutomovil_seq", sequenceName = "reservaAutomovil_SEQ", allocationSize = 1)
     @Column(name = "ID_RVA_AUTO", nullable = false)
     @EqualsAndHashCode.Include
-    private int idReservaAutomovil;
+    private Integer idReservaAutomovil;
 
     @Column(name = "FECHA_INICIO", nullable = false)
     @Temporal(TemporalType.DATE)
@@ -42,5 +43,14 @@ public class ReservaAutomovil implements Serializable {
     @ManyToOne
     @JoinColumn(name = "ID_CLIENTE", nullable = false)
     private Cliente cliente;
+
+    public ReservaAutomovil(Date fechaInicio, Date fechaDevolucion, String origen, String destino, Empleado empleado, Cliente cliente) {
+        this.fechaInicio = fechaInicio;
+        this.fechaDevolucion = fechaDevolucion;
+        this.origen = origen;
+        this.destino = destino;
+        this.empleado = empleado;
+        this.cliente = cliente;
+    }
 
 }

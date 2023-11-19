@@ -1,8 +1,10 @@
 package co.edu.uniquindio.proyecto.controllers;
 
 import co.edu.uniquindio.proyecto.dto.ReservaHotelData;
+import co.edu.uniquindio.proyecto.dto.ServiciosAdicionalesData;
 import co.edu.uniquindio.proyecto.model.Empleado;
 import co.edu.uniquindio.proyecto.model.ReservaHotel;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -18,6 +20,8 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.List;
+
 @Getter
 @Setter
 @Component
@@ -193,4 +197,55 @@ public class SceneController {
             e.printStackTrace();
         }
     }
+
+    public void cambiarAVentanaCrearReservaAuto(ActionEvent event, Empleado empleado) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/VistaCrearReservaAutomovil.fxml"));
+            loader.setControllerFactory(springContext::getBean);
+            Parent root = loader.load();
+
+            CrearReservaAutoController controlador = loader.getController();
+            controlador.displayEmployeeIDUsername(empleado);
+
+            Stage stage = new Stage();
+            Scene scene = new Scene(root);
+
+            stage.setTitle("Turism Management System - Crear Nueva Reserva Hotel");
+            stage.setMinHeight(700);
+            stage.setMinWidth(1100);
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException e) {
+
+            e.printStackTrace();
+        }
+    }
+
+
+    public void cambiarAVentanaServiciosAdicionales(ActionEvent event, Empleado empleado, List<ServiciosAdicionalesData> serviciosAdicionalesDataList) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/VistaServiciosAdicionales.fxml"));
+            loader.setControllerFactory(springContext::getBean);
+            Parent root = loader.load();
+
+            ServiciosAutomovilController controlador = loader.getController();
+            controlador.displayEmployeeIDUsername(empleado, serviciosAdicionalesDataList);
+
+            Stage stage = new Stage();
+            Scene scene = new Scene(root);
+
+            stage.setTitle("Turism Management System - Crear Nueva Reserva Hotel");
+            stage.setMinHeight(496);
+            stage.setMinWidth(875);
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException e) {
+
+            e.printStackTrace();
+        }
+    }
+
+
 }

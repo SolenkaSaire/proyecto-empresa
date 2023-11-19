@@ -573,7 +573,6 @@ public class CrearReservaHotelController implements Initializable {
     //CREAR NUEVA RESERVA
     @FXML
     void crearBtn(ActionEvent event) {
-
         verificarReservaHotel();
     }
 

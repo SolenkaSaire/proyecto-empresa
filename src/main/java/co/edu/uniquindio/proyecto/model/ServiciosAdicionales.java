@@ -12,13 +12,15 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@ToString
+
 public class ServiciosAdicionales implements Serializable {
 
     @Id
-    @Column(name = "CODIGO_SERVICIO", nullable = false)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "serviciosadicionales_seq")
+    @SequenceGenerator(name = "serviciosadicionales_seq", sequenceName = "serviciosadicionales_SEQ", allocationSize = 1)
+    @Column(name = "CODIGO_SERVICIO")
     @EqualsAndHashCode.Include
-    private int codigoServicio;
+    private Integer codigoServicio;
 
     @Column(name = "DESCRIPCION", length = 110, nullable = false)
     private String descripcion;
@@ -33,5 +35,20 @@ public class ServiciosAdicionales implements Serializable {
     @ManyToOne
     @JoinColumn(name = "TIPO_SERVICIO_ID", nullable = false)
     private TipoServicio tipoServicio;
+
+
+    public ServiciosAdicionales(String descripcion, DetalleReservaAutomovil detalleReservaAutomovil, TipoServicio tipoServicio) {
+        this.descripcion = descripcion;
+        this.detalleReservaAutomovil = detalleReservaAutomovil;
+        this.tipoServicio = tipoServicio;
+    }
+
+    public String toString() {
+        return "ServiciosAdicionales: "+
+                "codigoServicio = " + codigoServicio + ",\n" +
+                "descripcion = '" + descripcion + "',\n" +
+                "detalleReservaAutomovil = " + detalleReservaAutomovil.getAutomovil().getIdAutomovil() + ",\n" +
+                "tipoServicio = " + tipoServicio.getNombreServicio() + "\n";
+    }
 
 }

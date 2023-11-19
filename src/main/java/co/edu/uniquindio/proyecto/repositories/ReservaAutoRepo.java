@@ -7,12 +7,17 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface ReservaAutoRepo extends JpaRepository<ReservaAutomovil, Integer> {
 
     @Query("select n from ReservaAutomovil n where n.idReservaAutomovil=?1 ")
     ReservaAutomovil findByIdReserva(String idReserva);
+
+
+    @Query("SELECT new map(c.idCliente as id, c.peCedulaPsna as cedula, p.nombre as nombre) FROM Cliente c JOIN Persona p ON c.peCedulaPsna = p.cedulaPersona")
+    List<Map<String, Object>> obtenerClientes();
 
 
     /*
@@ -49,6 +54,13 @@ public interface ReservaAutoRepo extends JpaRepository<ReservaAutomovil, Integer
             "    Automovil au ON dra.automovil.idAutomovil = au.idAutomovil " +
             "GROUP BY rva.idReservaAutomovil, cl.peCedulaPsna, au.idAutomovil, sa.descripcion, rva.fechaInicio, rva.origen, rva.destino,dra.precioDia, dra.cantidad")
     List<Object[]> buscarReservasAutomovil();
+
+    @Query("select a.idAutomovil as id_automovil, t.descripcion as tipo, m.descripcion as marca, g.descripcion || ' año '|| g.modelo  as gama, a.precioDia as precio_diario " +
+            "from Automovil a " +
+            "join TipoAutomovil t on a.tipoAutomovil.idTipoAutomovil=t.idTipoAutomovil " +
+            "join Marca m  on a.marca.idMarca =m.idMarca " +
+            "join Gama g on a.gama.idGama= g.idGama")
+    List<Map<String, Object>> obtenerAutomovilesData();
 
     /*
     @Query("SELECT " +

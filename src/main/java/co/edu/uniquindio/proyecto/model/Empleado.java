@@ -12,7 +12,6 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@ToString
 public class Empleado implements Serializable {
 
     @Id
@@ -42,4 +41,16 @@ public class Empleado implements Serializable {
     private Persona persona;
 
 
+    @Override
+    public String toString() {
+        return "Empleado {" + "\n" +
+                "   codigoEmpleado = " + codigoEmpleado + ",\n" +
+                "   cedula = " + cedula + ",\n" +
+                "   salario = " + salario + ",\n" +
+                "   telefono = '" + telefono + "',\n" +
+                "   correoElectronico = '" + correoElectronico + "',\n" +
+                "   agencia = " + agencia.getNombre() + ",\n" +
+                "   persona = " + persona.getNombre() + "\n" +
+                "}";
+    }
 }
