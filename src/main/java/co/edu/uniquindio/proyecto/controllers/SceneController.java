@@ -1,8 +1,6 @@
 package co.edu.uniquindio.proyecto.controllers;
 
-import co.edu.uniquindio.proyecto.dto.ReservaAutoData;
-import co.edu.uniquindio.proyecto.dto.ReservaHotelData;
-import co.edu.uniquindio.proyecto.dto.ServiciosAdicionalesData;
+import co.edu.uniquindio.proyecto.dto.*;
 import co.edu.uniquindio.proyecto.model.Empleado;
 import co.edu.uniquindio.proyecto.model.ReservaHotel;
 import javafx.collections.ObservableList;
@@ -316,5 +314,53 @@ public class SceneController {
             e.printStackTrace();
         }
 
+    }
+
+    public void cambiarAVentanaActualizarCompraPaquete(ActionEvent event, Empleado empleado, CompraPaqueteData compraActualizar) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/VistaActualizarCompraPaquete.fxml"));
+            loader.setControllerFactory(springContext::getBean);
+            Parent root = loader.load();
+
+            ActualizarCompraPaqueteController controlador = loader.getController();
+            controlador.displayEmployeeIDUsername(empleado, compraActualizar);
+
+            Stage stage = new Stage();
+            Scene scene = new Scene(root);
+
+            stage.setTitle("Turism Management System - Actualizar Reserva Hotel");
+            stage.setMinHeight(700);
+            stage.setMinWidth(1100);
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException e) {
+
+            e.printStackTrace();
+        }
+    }
+
+    public void cambiarAVentanaModificarCompraArticulo(ActionEvent actionEvent, Empleado empleadoLogin, CompraArticuloData compraArtData) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/VistaActualizarCompraArticulo.fxml"));
+            loader.setControllerFactory(springContext::getBean);
+            Parent root = loader.load();
+
+            ActualizarCompraArticuloController controlador = loader.getController();
+            controlador.displayEmployeeIDUsername(empleadoLogin, compraArtData);
+
+            Stage stage = new Stage();
+            Scene scene = new Scene(root);
+
+            stage.setTitle("Turism Management System - Actualizar Reserva Hotel");
+            stage.setMinHeight(700);
+            stage.setMinWidth(1100);
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException e) {
+
+            e.printStackTrace();
+        }
     }
 }

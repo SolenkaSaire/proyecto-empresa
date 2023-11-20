@@ -1,17 +1,23 @@
 package co.edu.uniquindio.proyecto.repositories;
 
 import co.edu.uniquindio.proyecto.model.Compra;
+import co.edu.uniquindio.proyecto.model.MetodoPago;
 import co.edu.uniquindio.proyecto.model.PaqueteTuristico;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Map;
 
 public interface CompraPaqueteRepo extends JpaRepository<Compra, Integer> {
 
+    /*
     @Query("select p from Compra p where p.idCompra =: id")
-    Compra obtener (Integer id);
+    Compra obtener (Integer id);*/
+
+    @Query("SELECT c FROM Compra c WHERE c.idCompra = :id")
+    Compra obtener(@Param("id") Integer id);
 
     @Query("SELECT " +
             "co.idCompra AS id_compra, " +
@@ -42,6 +48,15 @@ public interface CompraPaqueteRepo extends JpaRepository<Compra, Integer> {
 
     @Query("SELECT new map(m.idMetodo as id_metodo, m.nombre as nombre) FROM MetodoPago m")
     List<Map<String, Object>>  obtenerMetodosPago();
+
+
+    /*
+    @Query("SELECT m from MetodoPago m where m.idMetodo =: idMetodo ")
+    MetodoPago findMetodoById(Integer idMetodo);*/
+
+    @Query("SELECT m FROM MetodoPago m WHERE m.idMetodo = :idMetodo")
+    MetodoPago findMetodoById(@Param("idMetodo") Integer idMetodo);
+
 }
 
 

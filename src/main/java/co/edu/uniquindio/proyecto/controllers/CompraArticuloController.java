@@ -1,5 +1,6 @@
 package co.edu.uniquindio.proyecto.controllers;
 
+import co.edu.uniquindio.proyecto.dto.ArticuloData;
 import co.edu.uniquindio.proyecto.dto.CompraArticuloData;
 import co.edu.uniquindio.proyecto.dto.ReservaHotelData;
 import co.edu.uniquindio.proyecto.model.Compra;
@@ -15,6 +16,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -41,6 +43,12 @@ public class CompraArticuloController implements Initializable {
     private SceneController sceneController;
 
     Empleado empleadoLogin;
+    private static final String VALIDACION_DATOS = "Validacion de datos";
+
+
+    private CompraArticuloData compraArtData;
+
+    private Compra compraSeleccionada;
 
     public ObservableList<CompraArticuloData> compraArticuloData = FXCollections.observableArrayList();
 
@@ -324,6 +332,22 @@ public class CompraArticuloController implements Initializable {
     }
 
     @FXML
+    void compraArticuloSelectData(MouseEvent event){
+        compraArtData = carticulos_tableview.getSelectionModel().getSelectedItem();
+
+        if(compraArtData!=null){
+            compraSeleccionada = compraArticuloRepo.obtener(Integer.parseInt(compraArtData.getId_compra()));
+            System.out.println("compra seleccionada: " + compraSeleccionada.toString());
+        }
+
+        int num = carticulos_tableview.getSelectionModel().getSelectedIndex();
+        if((num -1) < -1){
+            return;
+        }
+
+    }
+
+    @FXML
     void crearBtn(ActionEvent actionEvent) {
         abrirVentanaCrearCompraArticulo(actionEvent, empleadoLogin);
         ga_crear_btn.getScene().getWindow().hide();
@@ -334,8 +358,29 @@ public class CompraArticuloController implements Initializable {
         sceneController.cambiarAVentanaCrearCompraArticulo(event, empleado);
     }
 
+
+
     @FXML
     void modificarBtn(ActionEvent actionEvent) {
+        if(compraArtData != null){
+            abrirVentanaModificarCompraArticulo(actionEvent, empleadoLogin, compraArtData);
+            ga_modificar_btn.getScene().getWindow().hide();
+        }else{
+            mostrarMensaje(VALIDACION_DATOS, VALIDACION_DATOS, "Por favor, seleccione una reserva para actualizar",
+                    Alert.AlertType.WARNING);
+        }
+    }
+
+    private void abrirVentanaModificarCompraArticulo(ActionEvent actionEvent, Empleado empleadoLogin, CompraArticuloData compraArtData) {
+        sceneController.cambiarAVentanaModificarCompraArticulo(actionEvent, empleadoLogin, compraArtData);
+    }
+
+    private void mostrarMensaje(String titulo, String header, String contenido, Alert.AlertType information) {
+        Alert alert = new Alert(information);
+        alert.setTitle(titulo);
+        alert.setHeaderText(header);
+        alert.setContentText(contenido);
+        alert.showAndWait();
     }
 
     @FXML

@@ -132,6 +132,7 @@ public class CrearCompraArticuloController implements Initializable {
 
     @FXML
     void crearBtn(ActionEvent event) {
+
         verificarCompraArticulo();
     }
 

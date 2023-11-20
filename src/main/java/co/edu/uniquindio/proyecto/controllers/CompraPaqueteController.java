@@ -14,13 +14,7 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -177,11 +171,21 @@ public class CompraPaqueteController  implements Initializable {
 
 
 
+    private static final String VALIDACION_DATOS = "Validacion de datos";
+
+
     @Autowired
     private SceneController sceneController;
 
 
-    Empleado empleadoLogin;
+    private Empleado empleadoLogin;
+
+    private CompraPaqueteData compraPaqueteDataSeleccionada;
+
+    private Compra compraSeleccionada;
+
+
+
 
     @Autowired
     private CompraPaqueteRepo compraPaqueteRepo;
@@ -226,12 +230,22 @@ public class CompraPaqueteController  implements Initializable {
 
     @FXML
     void compraPaqueteSelectData(MouseEvent event) {
+        compraPaqueteDataSeleccionada = cpaquetes_tableview.getSelectionModel().getSelectedItem();
         CompraPaqueteData compraPaquete = cpaquetes_tableview.getSelectionModel().getSelectedItem();
+     //   System.out.println("compra seleccionada: " + compraSeleccionada.getIdCompra());
+
+        if(compraPaqueteDataSeleccionada!=null){
+            int id = Integer.parseInt(compraPaquete.getId_compra());
+            compraSeleccionada = compraPaqueteRepo.obtener(id);
+            System.out.println("compra seleccionada: " + compraSeleccionada.getIdCompra());
+        }
 
         int num = cpaquetes_tableview.getSelectionModel().getSelectedIndex();
         if ((num - 1) < -1) {
             return;
         }
+
+        /*
         String fechaPaquete = compraPaquete.getFecha_paquete().substring(0, 10);
         String fechaCompra = compraPaquete.getFecha_compra().substring(0, 10);
 
@@ -272,7 +286,7 @@ public class CompraPaqueteController  implements Initializable {
 
         gp_detalles_lbl.setText(compraPaquete.getEstado());
 
-        System.out.println("index es " + compraPaquete.getId_compra());
+        System.out.println("index es " + compraPaquete.getId_compra());*/
     }
 
 
@@ -425,8 +439,34 @@ public class CompraPaqueteController  implements Initializable {
 
     @FXML
     void modificarBtn(javafx.event.ActionEvent actionEvent) {
+        //validar que se haya seleccionado una reserva
+        if (compraPaqueteDataSeleccionada != null) {
+            //actualizarReservaHotel();
+            abrirVentanaActualizarCompraPaquete(actionEvent, empleadoLogin, compraPaqueteDataSeleccionada);
+            gp_crear_btn.getScene().getWindow().hide();
+        } else {
+            mostrarMensaje(VALIDACION_DATOS, VALIDACION_DATOS, "Por favor, seleccione una reserva para actualizar",
+                    Alert.AlertType.WARNING);
+        }
+
     }
 
+
+
+
+    private void abrirVentanaActualizarCompraPaquete(javafx.event.ActionEvent event, Empleado empleado, CompraPaqueteData compraPaqueteDataSeleccionada) {
+        sceneController.cambiarAVentanaActualizarCompraPaquete(event, empleado, compraPaqueteDataSeleccionada);
+    }
+
+
+
+    private void mostrarMensaje(String titulo, String header, String contenido, Alert.AlertType information) {
+        Alert alert = new Alert(information);
+        alert.setTitle(titulo);
+        alert.setHeaderText(header);
+        alert.setContentText(contenido);
+        alert.showAndWait();
+    }
     @FXML
     void buscarBtn(javafx.event.ActionEvent actionEvent) {
     }

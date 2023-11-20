@@ -123,7 +123,7 @@
                                           <Font size="14.0" />
                                        </font>
                                     </Label>
-                                    <TableView fx:id="cpaquetes_tableview" layoutX="21.0" layoutY="45.0" prefHeight="345.0" prefWidth="634.0" stylesheets="@reservaDesign.css" AnchorPane.bottomAnchor="13.399999999999977" AnchorPane.leftAnchor="21.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="45.0">
+                                    <TableView fx:id="cpaquetes_tableview" layoutX="21.0" layoutY="45.0" onMouseClicked="#compraPaqueteSelectData" prefHeight="345.0" prefWidth="634.0" stylesheets="@reservaDesign.css" AnchorPane.bottomAnchor="13.399999999999977" AnchorPane.leftAnchor="21.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="45.0">
                                        <columns>
                                           <TableColumn fx:id="cpaquetes_id" prefWidth="36.26667785644531" text="ID" />
                                           <TableColumn fx:id="cpaquetes_cliente" prefWidth="57.600006103515625" text="Cliente" />

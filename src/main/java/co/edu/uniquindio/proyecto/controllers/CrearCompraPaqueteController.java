@@ -492,6 +492,7 @@ public class CrearCompraPaqueteController implements Initializable {
         }
 
     }
+
     public void paquetesSelectedShowTableData(PaqueteData paqueteCarrito) {
         try {
             // Obtener los datos actuales de la tabla
