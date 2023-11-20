@@ -104,7 +104,7 @@
                                     <Button fx:id="ga_crear_btn" layoutX="252.0" layoutY="17.0" mnemonicParsing="false" onAction="#crearBtn" prefHeight="26.0" prefWidth="96.0" styleClass="add-btn" stylesheets="@reservaDesign.css" text="Crear" />
                                     <Button fx:id="ga_modificar_btn" layoutX="529.0" layoutY="17.0" mnemonicParsing="false" onAction="#actualizarBtn" prefHeight="26.0" prefWidth="97.0" styleClass="update-btn" stylesheets="@reservaDesign.css" text="Modificar" />
                                     <Button fx:id="ga_buscar_btn" layoutX="396.0" layoutY="17.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="96.0" styleClass="search-btn" stylesheets="@reservaDesign.css" text="Buscar" />
-                                    <Button fx:id="ga_eliminar_btn" layoutX="658.0" layoutY="17.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="100.0" styleClass="delete-btn" stylesheets="@reservaDesign.css" text="Eliminar" />
+                                    <Button fx:id="ga_eliminar_btn" layoutX="658.0" layoutY="17.0" mnemonicParsing="false" onAction="#eliminar" prefHeight="26.0" prefWidth="100.0" styleClass="delete-btn" stylesheets="@reservaDesign.css" text="Eliminar" />
                                     <Label layoutX="21.0" layoutY="10.0" styleClass="header-1" stylesheets="@reservaDesign.css" text="Gestionar Reservas Automoviles">
                                        <font>
                                           <Font size="14.0" />
@@ -144,7 +144,7 @@
                                           <String fx:value="shadow" />
                                        </styleClass>
                                     </TableView>
-                                    <TextField fx:id="ga_search_field" layoutX="184.0" layoutY="14.0" prefHeight="26.0" prefWidth="185.0" promptText="Buscar" styleClass="search" stylesheets="@reservaDesign.css" />
+                                    <TextField fx:id="ga_search_field" layoutX="184.0" layoutY="14.0" onAction="#reservaAutoSearch" prefHeight="26.0" prefWidth="185.0" promptText="Buscar" styleClass="search" stylesheets="@reservaDesign.css" />
                                     <ImageView fitHeight="19.0" fitWidth="20.0" layoutX="188.0" layoutY="18.0">
                                        <image>
                                           <Image url="@images/search-icon.png" />

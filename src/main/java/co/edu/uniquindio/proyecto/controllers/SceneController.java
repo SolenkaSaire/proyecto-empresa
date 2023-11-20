@@ -224,14 +224,14 @@ public class SceneController {
     }
 
 
-    public void cambiarAVentanaServiciosAdicionales(ActionEvent event, Empleado empleado, List<ServiciosAdicionalesData> serviciosAdicionalesDataList) {
+    public void cambiarAVentanaServiciosAdicionales(ActionEvent event, Empleado empleado, List<ServiciosAdicionalesData> serviciosAdicionalesDataList, String tipoVentana) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/VistaServiciosAdicionales.fxml"));
             loader.setControllerFactory(springContext::getBean);
             Parent root = loader.load();
 
             ServiciosAutomovilController controlador = loader.getController();
-            controlador.displayEmployeeIDUsername(empleado, serviciosAdicionalesDataList);
+            controlador.displayEmployeeIDUsername(empleado, serviciosAdicionalesDataList, tipoVentana);
 
             Stage stage = new Stage();
             Scene scene = new Scene(root);
@@ -271,5 +271,50 @@ public class SceneController {
 
             e.printStackTrace();
         }
+    }
+
+    public void cambiarAVentanaCrearCompraArticulo(ActionEvent event, Empleado empleado) {
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/VistaCrearCompraArticulo.fxml"));
+            loader.setControllerFactory(springContext::getBean);
+            Parent root = loader.load();
+
+            CrearCompraArticuloController controlador = loader.getController();
+            controlador.displayEmployeeIDUsername(empleado);
+
+            Stage stage = new Stage();
+            Scene scene = new Scene(root);
+
+            stage.setTitle("Turism Management System - Crear Nueva Compra Articulo");
+            stage.setMinHeight(700);
+            stage.setMinWidth(1100);
+            stage.setScene(scene);
+            stage.show();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void cambiarAVentanaCrearCompraPaquete(ActionEvent event, Empleado empleado) {
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/VistaCrearCompraPaquete.fxml"));
+            loader.setControllerFactory(springContext::getBean);
+            Parent root = loader.load();
+
+            CrearCompraPaqueteController controlador = loader.getController();
+            controlador.displayEmployeeIDUsername(empleado);
+
+            Stage stage = new Stage();
+            Scene scene = new Scene(root);
+
+            stage.setTitle("Turism Management System - Crear Nueva Compra Paquete");
+            stage.setMinHeight(700);
+            stage.setMinWidth(1100);
+            stage.setScene(scene);
+            stage.show();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
     }
 }

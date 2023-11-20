@@ -2,7 +2,9 @@ package co.edu.uniquindio.proyecto.repositories;
 
 
 import co.edu.uniquindio.proyecto.model.Compra;
+import co.edu.uniquindio.proyecto.model.MetodoPago;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -27,4 +29,30 @@ public interface CompraArticuloRepo extends JpaRepository<Compra, Integer>{
             "JOIN ArticuloTuristico at ON dc.articuloTuristico.idArticulo = at.idArticulo " +
             "JOIN CategoriaArticulo ca ON at.catArtCodigo = ca.codigoCat")
     List<Object[]> buscarComprasArticulo();
+
+
+
+    @Query("SELECT new map(c.idCliente as id, c.peCedulaPsna as cedula, p.nombre as nombre) FROM Cliente c JOIN Persona p ON c.peCedulaPsna = p.cedulaPersona")
+    List<Map<String, Object>> obtenerClientes();
+
+    @Query("SELECT new map(a.idArticulo as id_articulo, c.nombre as categoria, a.nombre as nombre, a.descripcion as descripcion, a.precio as precio) FROM ArticuloTuristico a JOIN CategoriaArticulo c ON a.catArtCodigo = c.codigoCat ")
+    List<Map<String, Object>> obtenerArticulodData();
+
+
+    @Query("SELECT new map(m.idMetodo as id_metodo, m.nombre as nombre) FROM MetodoPago m")
+    List<Map<String, Object>>  obtenerMetodosPago();
+
+    /*
+    @Query("SELECT nombre from MetodoPago")
+    List<String> obtenerMetodosPago();*/
+/*
+    @Query("SELECT m FROM MetodoPago m WHERE m.nombre = :nombreMetodo")
+    MetodoPago findMetodoByNombre(@Param("nombreMetodo") String nombreMetodo);
+*/
+
+    @Query("SELECT m from MetodoPago m where m.idMetodo =: idMetodo ")
+    MetodoPago findMetodoById(Integer idMetodo);
+
+    @Query("SELECT m.idMetodo from MetodoPago m where m.nombre =: nombreMetodo ")
+    String findIdMetodoByNombre(@Param("nombreMetodo") String nombreMetodo);
 }

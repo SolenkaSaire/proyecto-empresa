@@ -12,7 +12,6 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@ToString
 public class ArticuloTuristico implements Serializable {
 
     @Id
@@ -41,4 +40,14 @@ public class ArticuloTuristico implements Serializable {
     private CategoriaArticulo categoriaArticulo;
 
 
+
+    @Override
+    public String toString() {
+        return "ArticuloTuristico{" +
+                "idArticulo=" + idArticulo +
+                ", nombre='" + nombre + '\'' +
+                ", descripcion='" + descripcion + '\'' +
+                // other fields, but not categoriaArticulo
+                '}';
+    }
 }

@@ -17,10 +17,11 @@ import java.util.Date;
 public class Compra implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @EqualsAndHashCode.Include
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "compra_seq")
+    @SequenceGenerator(name = "compra_seq", sequenceName = "compra_SEQ", allocationSize = 1)
     @Column(name = "ID_COMPRA", nullable = false)
-    private int idCompra;
+    @EqualsAndHashCode.Include
+    private Integer idCompra;
 
     @Column(name = "ID_METODO", nullable = false)
     private int idMetodo;
@@ -52,6 +53,25 @@ public class Compra implements Serializable {
     @ManyToOne
     @JoinColumn(name = "ID_METODO", referencedColumnName = "ID_METODO", insertable = false, updatable = false)
     private MetodoPago metodoPago;
+
+
+    public Compra(int idMetodo, int idCliente, int codigoEmpleado, Date fecha, String descripcion, String tipoCompra) {
+        this.idMetodo = idMetodo;
+        this.idCliente = idCliente;
+        this.codigoEmpleado = codigoEmpleado;
+        this.fecha = fecha;
+        this.descripcion = descripcion;
+        this.tipoCompra = tipoCompra;
+    }
+    /*
+    public Compra(MetodoPago metodoPago, Cliente cliente, Empleado empleado, Date fecha, String descripcion, String tipoCompra) {
+        this.metodoPago = metodoPago;
+        this.cliente = cliente;
+        this.empleado = empleado;
+        this.fecha = fecha;
+        this.descripcion = descripcion;
+        this.tipoCompra = tipoCompra;
+    }*/
 
 
 }

@@ -4,7 +4,9 @@ package co.edu.uniquindio.proyecto.controllers;
 import co.edu.uniquindio.proyecto.dto.ReservaAutoData;
 import co.edu.uniquindio.proyecto.dto.ServiciosAdicionalesData;
 import co.edu.uniquindio.proyecto.model.*;
+import co.edu.uniquindio.proyecto.repositories.DetalleReservaAutoRepo;
 import co.edu.uniquindio.proyecto.repositories.ReservaAutoRepo;
+import co.edu.uniquindio.proyecto.repositories.ServiciosAdicionalesRepo;
 import javafx.application.Platform;
 import javafx.beans.Observable;
 import javafx.collections.FXCollections;
@@ -68,13 +70,19 @@ import java.util.List;
 
 
 @Controller
-public class ReservaAutoController  implements Initializable{
+public class ReservaAutoController  implements Initializable {
     @Autowired
     private SceneController sceneController;
-   @Autowired
+    @Autowired
     private ReservaAutoRepo reservaAutoRepo;
 
-   private ReservaAutomovil reservaSeleccionada;
+    private ReservaAutomovil reservaSeleccionada;
+
+    @Autowired
+    private ServiciosAdicionalesRepo serviciosAdicionalesRepo;
+
+    @Autowired
+    private DetalleReservaAutoRepo detalleReservaAutomovilRepo;
 
     private ReservaAutoData reserva;
     private Empleado empleadoLogin;
@@ -224,11 +232,156 @@ public class ReservaAutoController  implements Initializable{
     private HashMap<String, String[]> mapaHoteles;
     private HashMap<String, String[]> mapaRegimenes;
 
+
+
+    @FXML
+    void eliminar(ActionEvent event) {
+
+        eliminarReserva();
+    }
+
+    private void eliminarReserva() {
+
+        boolean confirmacion;
+
+        if (reservaSeleccionada != null) {
+            confirmacion = mostrarMensajeConfirmacion("Confirme que desea eliminar la reserva seleccionada");
+            if (confirmacion) {
+
+                //encontrar todos los servicios adicionales asociados a la reserva seleccionada
+                List<ServiciosAdicionales> serviciosAdicionales = reservaAutoRepo.getServiciosAdicionales(reservaSeleccionada.getIdReservaAutomovil());
+                int sizeSev = serviciosAdicionales.size();
+
+                //encontrar todos los detalles reserva automovil asociados a la reserva seleccionada
+                List<DetalleReservaAutomovil> detallesReservaAutomovil = reservaAutoRepo.getDetallesReservaAutomovil(reservaSeleccionada.getIdReservaAutomovil());
+                int sizeDet = detallesReservaAutomovil.size();
+
+                //warning de confirmacion, se eliminara 1 reserva, sizeSev servicios y sizeDet detalles reserva automovil
+                mostrarMensaje(VALIDACION_DATOS, VALIDACION_DATOS, "Se eliminará 1 reserva, " + sizeSev + " servicios adicionales y " + sizeDet + " detalles reserva automovil\n" +
+                                "¿Desea continuar?",
+                        Alert.AlertType.WARNING);
+
+                //eliminar todos los servicios adicionales asociados a la reserva seleccionada
+                for (ServiciosAdicionales serviciosAdicional : serviciosAdicionales) {
+                        serviciosAdicionalesRepo.delete(serviciosAdicional);
+                }
+
+                //eliminar todos los detalles reserva automovil asociados a la reserva seleccionada
+                for (DetalleReservaAutomovil detalleReservaAutomovil : detallesReservaAutomovil) {
+                        detalleReservaAutomovilRepo.delete(detalleReservaAutomovil);
+                }
+
+                //elimina la reserva
+                reservaAutoRepo.delete(reservaSeleccionada);
+
+                reservaSeleccionada = null;
+                mostrarMensaje(VALIDACION_DATOS, VALIDACION_DATOS, "Reserva eliminada con éxito",
+                        Alert.AlertType.INFORMATION);
+
+
+                /*
+                // Encuentra todas las habitaciones asociadas con la reserva
+                List<HabitacionReserva> habitacionesReserva = habitacionReservaRepo.findByReservaId(Integer.parseInt(reserva.getId_reserva()));
+
+                // Elimina todas las habitaciones asociadas con la reserva
+                for (HabitacionReserva habitacionReserva : habitacionesReserva) {
+                    habitacionReservaRepo.delete(habitacionReserva);
+                }
+
+                // Elimina cancelacion hospedaje asociado
+                CancelacionHospedaje cancelacionHospedaje = reservaHotelRepo.buscarCancelacionHospedaje(Integer.parseInt(reserva.getId_reserva()));
+                if (cancelacionHospedaje != null) {
+                    cancelacionHospedajeRepo.delete(cancelacionHospedaje);
+                }
+
+                // Elimina la reserva
+                reservaHotelRepo.delete(reservaSeleccionada);
+
+                //  limpiarInterfazReservaHotel();
+
+                //limpiar habitacionSeleccionada y reservaSeleccionada
+                selectedHabitacion = null;
+                reservaSeleccionada = null;
+                mostrarMensaje(VALIDACION_DATOS, VALIDACION_DATOS, "Reserva eliminada con éxito",
+                        Alert.AlertType.INFORMATION);
+
+
+                 */
+            }
+
+        } else {
+            mostrarMensaje(VALIDACION_DATOS, VALIDACION_DATOS, "No ha seleccionado una reserva para eliminar",
+                    Alert.AlertType.WARNING);
+        }
+
+
+    }
+
+
+    private boolean mostrarMensajeConfirmacion(String mensaje) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setHeaderText(null);
+        alert.setTitle("Confirmación");
+        alert.setContentText(mensaje);
+        Optional<ButtonType> action = alert.showAndWait();
+        if (action.isPresent()) {
+            return (action.get() == ButtonType.OK);
+        } else {
+            return false;
+        }
+    }
+/*
+    @FXML
+    void reservkaSearch(ActionEvent event) {
+        FilteredList<ReservaHotelData> filter = new FilteredList<>(reservaHotelData, p -> true);
+
+        gr_search_field.textProperty().addListener((Observable, oldValue, newValue) -> {
+            filter.setPredicate(reserva -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (reserva.getId_reserva().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (reserva.getCedula_cliente().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (reserva.getHotel().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (reserva.getRegimen_hospedaje().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (reserva.getFecha_reserva().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (reserva.getFecha_checkin().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (reserva.getFecha_checkout().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (Double.toString(reserva.getTotal_con_impuesto()).contains(lowerCaseFilter)) {
+                    return true;
+                /*} else if (Integer.toString(reserva.getCantidad_habitaciones()).contains(lowerCaseFilter)) {
+                    return true;
+                } else if (reserva.getEstado().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else
+                    return false;
+            });
+        });
+
+        SortedList<ReservaHotelData> sortedData = new SortedList<>(filter);
+        sortedData.comparatorProperty().bind(reserva_tableview.comparatorProperty());
+        reserva_tableview.setItems(sortedData);
+
+    }
+
+*/
+
     public void reservaAutoShowTableData() throws Exception{
         List<Object[]> results= reservaAutoRepo.buscarReservasAutomovil();
         List<ReservaAutoData> reservaAutoDataList = new ArrayList<>();
 
         for(Object[] result : results){
+            Double total = result[7] != null ? ((Double) result[7]).doubleValue() : 0.0;
+            Integer cantidadAutos = result[8] != null ? ((Integer) result[8]).intValue() : 0;
             ReservaAutoData data = new ReservaAutoData(
                     String.valueOf(result[0]), // idReservaAuto
                     String.valueOf(result[1]), // idCliente
@@ -237,8 +390,8 @@ public class ReservaAutoController  implements Initializable{
                     String.valueOf(result[4]), // fechaReserva
                     String.valueOf(result[5]), // origen
                     String.valueOf(result[6]), // destino
-                    (Double) result[7], // total
-                    (Integer) result[8] // cantidad_auto
+                    total, // total
+                    cantidadAutos // cantidad_auto
             );
             reservaAutoDataList.add(data);
         }
@@ -258,46 +411,11 @@ public class ReservaAutoController  implements Initializable{
         rvautos_tableview.setItems(reservaAutoData);
     }
 
-
+/*
     @FXML
     void reservaSearch(ActionEvent event) {
-        FilteredList<ReservaAutoData> filter = new FilteredList<>(reservaAutoData, p -> true);
 
-
-        ga_search_field.textProperty().addListener((Observable, oldValue, newValue) -> {
-            filter.setPredicate(reserva -> {
-                if (newValue == null || newValue.isEmpty()) {
-                    return true;
-                }
-                String lowerCaseFilter = newValue.toLowerCase();
-
-                if (reserva.getId_reserva().toLowerCase().contains(lowerCaseFilter)) {
-                    return true;
-                } else if (reserva.getCedula_cliente().toLowerCase().contains(lowerCaseFilter)) {
-                    return true;
-                } else if (reserva.getAuto().toLowerCase().contains(lowerCaseFilter)) {
-                    return true;
-                } else if (reserva.getServicios_adicionales().toLowerCase().contains(lowerCaseFilter)) {
-                    return true;
-                } else if (reserva.getFecha_reserva().toLowerCase().contains(lowerCaseFilter)) {
-                    return true;
-                } else if (reserva.getLugar_origen().toLowerCase().contains(lowerCaseFilter)) {
-                    return true;
-                } else if (reserva.getLugar_destino().toLowerCase().contains(lowerCaseFilter)) {
-                    return true;
-                } else if (Double.toString(reserva.getPrecio_total()).contains(lowerCaseFilter)) {
-                    return true;
-                } else if (Integer.toString(reserva.getCantidad_autos()).contains(lowerCaseFilter)) {
-                    return true;
-                } else
-                    return false;
-            });
-        });
-
-        SortedList<ReservaAutoData> sortedData = new SortedList<>(filter);
-        sortedData.comparatorProperty().bind(rvautos_tableview.comparatorProperty());
-        rvautos_tableview.setItems(sortedData);
-    }
+    }*/
 
     @FXML
     void switchForm(ActionEvent event)  throws Exception{
@@ -470,7 +588,7 @@ public class ReservaAutoController  implements Initializable{
         runTime();
         try {
             reservaAutoShowTableData();
-            //  reservaSearch();
+           //  reservaSearch();
 
             //  cargarComboPaisHotel();
             //  cargarComboClienteHotel();
@@ -483,6 +601,43 @@ public class ReservaAutoController  implements Initializable{
         }
     }
 
+    @FXML
+    public void reservaAutoSearch(ActionEvent actionEvent) {
+        FilteredList<ReservaAutoData> filter = new FilteredList<>(reservaAutoData, p -> true);
 
 
+        ga_search_field.textProperty().addListener((Observable, oldValue, newValue) -> {
+            filter.setPredicate(reserva -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (reserva.getId_reserva().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (reserva.getCedula_cliente().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (reserva.getAuto().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (reserva.getServicios_adicionales().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (reserva.getFecha_reserva().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (reserva.getLugar_origen().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (reserva.getLugar_destino().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (Double.toString(reserva.getPrecio_total()).contains(lowerCaseFilter)) {
+                    return true;
+                } else if (Integer.toString(reserva.getCantidad_autos()).contains(lowerCaseFilter)) {
+                    return true;
+                } else
+                    return false;
+            });
+        });
+
+        SortedList<ReservaAutoData> sortedData = new SortedList<>(filter);
+        sortedData.comparatorProperty().bind(rvautos_tableview.comparatorProperty());
+        rvautos_tableview.setItems(sortedData);
+    }
 }

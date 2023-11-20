@@ -1,4 +1,9 @@
 package co.edu.uniquindio.proyecto.repositories;
 
-public interface DetalleCompraPaqueteRepo {
+import co.edu.uniquindio.proyecto.model.DetalleCompraPaquete;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface DetalleCompraPaqueteRepo extends JpaRepository<DetalleCompraPaquete, Integer> {
 }

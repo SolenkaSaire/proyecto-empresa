@@ -458,13 +458,13 @@ public class CrearReservaAutoController implements Initializable {
             alert.show();
         }else {
             //abrir ventana servicios
-            abrirVentanaServicios(event, empleadoLogueado, listaServiciosAdicionales);
+            abrirVentanaServicios(event, empleadoLogueado, listaServiciosAdicionales, "Crear");
         }
       //  gr_servicios_btn.getScene().getWindow().hide();
     }
 
-    private void abrirVentanaServicios(ActionEvent event, Empleado empleado, List<ServiciosAdicionalesData> listaServicios) {
-      sceneController.cambiarAVentanaServiciosAdicionales(event, empleado, listaServicios);
+    private void abrirVentanaServicios(ActionEvent event, Empleado empleado, List<ServiciosAdicionalesData> listaServicios, String tipoVentana) {
+      sceneController.cambiarAVentanaServiciosAdicionales(event, empleado, listaServicios, tipoVentana);
     }
 
     private void abrirVentanaVolver(ActionEvent event, Empleado empleado) {
@@ -828,7 +828,7 @@ public class CrearReservaAutoController implements Initializable {
         }
     }
 
-    public void devolverAReservaAuto(ObservableList<ServiciosAdicionalesData> serviciosAdicionalesDataList) {
+    public void devolverAReservaAutoCreacion(ObservableList<ServiciosAdicionalesData> serviciosAdicionalesDataList) {
         listaServiciosAdicionales = serviciosAdicionalesDataList;
         //sout a la lista
         for (ServiciosAdicionalesData s : serviciosAdicionalesDataList) {

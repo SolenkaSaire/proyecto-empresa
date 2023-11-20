@@ -7,4 +7,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ArticuloTuristicoRepo extends JpaRepository<ArticuloTuristico, Integer> {
+
+        @Query("select u from ArticuloTuristico u where u.idArticulo= ?1")
+        ArticuloTuristico obtener(Integer id);
 }

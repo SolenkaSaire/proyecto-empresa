@@ -1,7 +1,9 @@
 package co.edu.uniquindio.proyecto.repositories;
 
+import co.edu.uniquindio.proyecto.model.DetalleReservaAutomovil;
 import co.edu.uniquindio.proyecto.model.ReservaAutomovil;
 import co.edu.uniquindio.proyecto.model.ReservaHotel;
+import co.edu.uniquindio.proyecto.model.ServiciosAdicionales;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -14,6 +16,7 @@ public interface ReservaAutoRepo extends JpaRepository<ReservaAutomovil, Integer
 
     @Query("select n from ReservaAutomovil n where n.idReservaAutomovil=?1 ")
     ReservaAutomovil findByIdReserva(String idReserva);
+
 
 
     @Query("SELECT new map(c.idCliente as id, c.peCedulaPsna as cedula, p.nombre as nombre) FROM Cliente c JOIN Persona p ON c.peCedulaPsna = p.cedulaPersona")
@@ -61,6 +64,14 @@ public interface ReservaAutoRepo extends JpaRepository<ReservaAutomovil, Integer
             "join Marca m  on a.marca.idMarca =m.idMarca " +
             "join Gama g on a.gama.idGama= g.idGama")
     List<Map<String, Object>> obtenerAutomovilesData();
+
+
+    @Query("select dra from DetalleReservaAutomovil dra where dra.reservaAutomovil.idReservaAutomovil=?1")
+    List<DetalleReservaAutomovil> getDetallesReservaAutomovil(int idReservaAutomovil);
+
+
+    @Query("select sa from ServiciosAdicionales sa where sa.detalleReservaAutomovil.reservaAutomovil.idReservaAutomovil=?1")
+    List<ServiciosAdicionales>getServiciosAdicionales(int idReservaAutomovil);
 
     /*
     @Query("SELECT " +

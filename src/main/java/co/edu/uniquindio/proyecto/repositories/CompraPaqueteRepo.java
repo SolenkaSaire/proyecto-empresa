@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Map;
 
 public interface CompraPaqueteRepo extends JpaRepository<Compra, Integer> {
 
@@ -30,6 +31,17 @@ public interface CompraPaqueteRepo extends JpaRepository<Compra, Integer> {
             "JOIN PaqueteTuristico paq ON dc.paqueteTuristico.idPaqueteTuristico = paq.idPaqueteTuristico " +
             "JOIN CentroTuristico ce ON paq.centroTuristico.idCentro = ce.idCentro")
     List<Object[]> buscarCompraPaquete();
+
+
+    @Query("SELECT new map(c.idCliente as id, c.peCedulaPsna as cedula, p.nombre as nombre) FROM Cliente c JOIN Persona p ON c.peCedulaPsna = p.cedulaPersona")
+    List<Map<String, Object>> obtenerClientes();
+
+    @Query("SELECT new map(p.idPaqueteTuristico as id_paquete, p.nombre as nombre, p.descripcion as descripcion, p.precio as precio, p.fechaPaquete as fecha_paquete) FROM PaqueteTuristico p")
+    List<Map<String, Object>> obtenerPaquetesData();
+
+
+    @Query("SELECT new map(m.idMetodo as id_metodo, m.nombre as nombre) FROM MetodoPago m")
+    List<Map<String, Object>>  obtenerMetodosPago();
 }
 
 

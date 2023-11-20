@@ -7,6 +7,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "DETALLE_COMPRA", schema = "PY_EP")
+@IdClass(DetalleCompraArticuloKey.class)
 @Getter
 @Setter
 @NoArgsConstructor
@@ -15,9 +16,18 @@ import java.io.Serializable;
 @ToString
 public class DetalleCompra implements Serializable {
 
-    @EmbeddedId
+    @Id
+    @ManyToOne
+    @JoinColumn(name = "ID_ARTICULO", nullable = false)
     @EqualsAndHashCode.Include
-    private DetalleCompraId id;
+    private ArticuloTuristico articuloTuristico;
+
+
+    @Id
+    @ManyToOne
+    @JoinColumn(name = "ID_COMPRA",nullable = false)
+    @EqualsAndHashCode.Include
+    private Compra compra;
 
     @Column(name = "PRECIO_UNIDAD", nullable = false)
     private double precioUnidad;
@@ -25,24 +35,6 @@ public class DetalleCompra implements Serializable {
     @Column(name = "CANTIDAD", nullable = false)
     private int cantidad;
 
-    @ManyToOne
-    @JoinColumn(name = "ID_ARTICULO", referencedColumnName = "ID_ARTICULO", insertable = false, updatable = false)
-    private ArticuloTuristico articuloTuristico;
-
-    @ManyToOne
-    @JoinColumn(name = "ID_COMPRA", referencedColumnName = "ID_COMPRA", insertable = false, updatable = false)
-    private Compra compra;
 
 
-    @Embeddable
-    @EqualsAndHashCode
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class DetalleCompraId implements Serializable {
-        @Column(name = "ID_ARTICULO", nullable = false)
-        private int idArticulo;
-
-        @Column(name = "ID_COMPRA", nullable = false)
-        private int idCompra;
-    }
 }

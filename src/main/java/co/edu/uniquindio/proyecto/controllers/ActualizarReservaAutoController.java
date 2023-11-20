@@ -217,20 +217,213 @@ public class ActualizarReservaAutoController implements Initializable {
     }
 
 
+    private List<ServiciosAdicionales> crearServiciosAdicionales(List<DetalleReservaAutomovil> listaAux, ReservaAutomovil reservaAutomovilActualizada) {
+        System.out.println("lista servicios adicionales q llegaron a crearServiciosAdicionales: \n"
+                + listaServiciosAdicionales.toString());
+        List<ServiciosAdicionalesData> serviciosAdicionalesDataList = listaServiciosAdicionales;
+
+
+        List<ServiciosAdicionales> listaFinal = new ArrayList<>();
+
+        //verificar si la lista esta vacia, de ser asi, retornar nada
+        if (serviciosAdicionalesDataList.size() == 0) {
+            System.out.println("VACIO");
+            return null;
+        }else{
+            //separar servicios adicionales existentes a actualizar y servicios no existentes a crear y servicios eliminados
+            List<ServiciosAdicionalesData> serviciosAdicionalesDataListActualizar = new ArrayList<>();
+            List<ServiciosAdicionalesData> serviciosAdicionalesDataListCrear = new ArrayList<>();
+            List<ServiciosAdicionalesData> serviciosAdicionalesDataListEliminar = serviciosAdicionalesDataList;
+
+            //recorrer la el carrito de carritod aux
+            /*
+            for (DetalleReservaAutomovil detalleReservaAutomovil : listaAux) {
+                for (ServiciosAdicionalesData serviciosAdicionalesData : serviciosAdicionalesDataList) {
+                    List<ServiciosAdicionales> serviciosAdicionales = serviciosAdicionalesRepo.findByIdRvaIdAuto(reservaAutomovilActualizada.getIdReservaAutomovil(), detalleReservaAutomovil.getAutomovil().getIdAutomovil());
+                    boolean exists = false;
+                    for (ServiciosAdicionales aux : serviciosAdicionales) {
+                        if (aux.getTipoServicio().getIdTipo()==Integer.parseInt(serviciosAdicionalesData.getId())) {
+                            exists = true;
+                            break;
+                        }
+                    }
+                    if (exists) {
+                        serviciosAdicionalesDataListActualizar.add(serviciosAdicionalesData);
+                    } else {
+                        serviciosAdicionalesDataListCrear.add(serviciosAdicionalesData);
+                    }
+                }
+            }*/
+
+            for (DetalleReservaAutomovil detalleReservaAutomovil : listaAux) {
+                for (ServiciosAdicionalesData serviciosAdicionalesData : serviciosAdicionalesDataList) {
+                    List<ServiciosAdicionales> serviciosAdicionales = serviciosAdicionalesRepo.findByIdRvaIdAuto(reservaAutomovilActualizada.getIdReservaAutomovil(), detalleReservaAutomovil.getAutomovil().getIdAutomovil());
+                    //recorrer la lista de servicios adicionales
+                    for (ServiciosAdicionales aux : serviciosAdicionales) {
+                        if (aux != null) {
+                            System.out.println("servicio hallado existente "+aux.toString());
+                            serviciosAdicionalesDataListActualizar.add(serviciosAdicionalesData);
+                            serviciosAdicionalesDataListEliminar.remove(serviciosAdicionalesData);
+
+                        } else if (aux == null) {
+                            System.out.println("servicio hallado no existente "+aux.toString());
+                            serviciosAdicionalesDataListCrear.add(serviciosAdicionalesData);
+                        }
+                    }
+                }
+            }
+
+
+            if (serviciosAdicionalesDataListEliminar.size() > 0) {
+                //buscar y eliminar los servicios adicionales asociados al detalle de la reserva
+                for (ServiciosAdicionalesData serviciosAdicionalesData : serviciosAdicionalesDataListEliminar) {
+                    int idRva = reservaAutomovilActualizada.getIdReservaAutomovil();
+                    int idAuto = Integer.parseInt(serviciosAdicionalesData.getId());
+                    List<ServiciosAdicionales> serviciosAdicionales =serviciosAdicionalesRepo.findByIdRvaIdAuto(idRva, idAuto);
+
+                    serviciosAdicionalesRepo.deleteAll(serviciosAdicionales);
+                }
+            }
+
+            if (serviciosAdicionalesDataListActualizar.size() > 0) {
+                System.out.println("lista servicios adicionales a actualizar: \n"
+                        + serviciosAdicionalesDataListActualizar.toString());
+                //actualizar los servicios adicionales
+                List<ServiciosAdicionales>listaAuxActualizar=actualizarServiciosAdicionales(serviciosAdicionalesDataListActualizar,listaAux,reservaAutomovilActualizada);
+                listaFinal.addAll(listaAuxActualizar);
+            }
+            if (serviciosAdicionalesDataListCrear.size() > 0) {
+                System.out.println("lista servicios adicionales a crear: \n"
+                        + serviciosAdicionalesDataListCrear.toString());
+                //crear los servicios adicionales
+                List<ServiciosAdicionales>listaAuxCrear=crearServicios(listaAux,reservaAutomovilActualizada, serviciosAdicionalesDataListCrear);
+                listaFinal.addAll(listaAuxCrear);
+            }
+
+
+/*
+        //si no esta vacia, crear los servicios adicionales
+        List<ServiciosAdicionales> listaServiciosAdicionales = new ArrayList<>();
+        for (DetalleReservaAutomovil detalleReservaAutomovil : listaAux) {
+            for (ServiciosAdicionalesData serviciosAdicionalesData : serviciosAdicionalesDataList) {
+                tipoServicioSeleccionado=tipoServicioRepo.findByIdTipo(serviciosAdicionalesData.getId());
+                ServiciosAdicionales serviciosAdicionales = new ServiciosAdicionales(
+                        serviciosAdicionalesData.getDescripcion(),
+                        detalleReservaAutomovil,
+                        tipoServicioSeleccionado
+                );
+
+                serviciosAdicionalesRepo.save(serviciosAdicionales);
+
+                listaServiciosAdicionales.add(serviciosAdicionales);
+            }
+        }*/
+
+        return listaFinal;
+    }
+
+}
+
+    private List<ServiciosAdicionales> actualizarServiciosAdicionales(List<ServiciosAdicionalesData> serviciosAdicionalesDataListActualizar, List<DetalleReservaAutomovil> listaAux, ReservaAutomovil reservaAutomovilActualizada) {
+
+        List<ServiciosAdicionalesData> serviciosAdicionalesDataList = serviciosAdicionalesDataListActualizar;
+        //verificar si la lista esta vacia, de ser asi, retornar nada
+        if (serviciosAdicionalesDataList.size() == 0) {
+            return null;
+        }else{
+            //si no esta vacia, crear los servicios adicionales
+            List<ServiciosAdicionales> listaServiciosAdicionales = new ArrayList<>();
+            for (DetalleReservaAutomovil detalleReservaAutomovil : listaAux) {
+                for (ServiciosAdicionalesData serviciosAdicionalesData : serviciosAdicionalesDataList) {
+
+                    List<ServiciosAdicionales> serviciosAdicionales = serviciosAdicionalesRepo.findByIdRvaIdAuto(reservaAutomovilActualizada.getIdReservaAutomovil(), Integer.parseInt(serviciosAdicionalesData.getId()));
+                    for (ServiciosAdicionales aux : serviciosAdicionales) {
+                        aux.setDescripcion(serviciosAdicionalesData.getDescripcion());
+                        aux.setTipoServicio(tipoServicioRepo.findByIdTipo(serviciosAdicionalesData.getId()));
+                        aux.setDetalleReservaAutomovil(detalleReservaAutomovil);
+                        serviciosAdicionalesRepo.save(aux);
+                        listaServiciosAdicionales.add(aux);
+                        System.out.println("servicio adicional actualizado: \n"
+                                + aux.toString());
+                    }
+
+                }
+            }
+
+            return listaServiciosAdicionales;
+        }
+
+    }
+
+
+    private List<ServiciosAdicionales> crearServicios(List<DetalleReservaAutomovil> listaAux, ReservaAutomovil reservaAutomovilActualizada, List<ServiciosAdicionalesData> serviciosAdicionalesDataListCrear) {
+
+        List<ServiciosAdicionalesData> serviciosAdicionalesDataList = serviciosAdicionalesDataListCrear;
+        //verificar si la lista esta vacia, de ser asi, retornar nada
+        if (serviciosAdicionalesDataList.size() == 0) {
+            return null;
+        }else{
+            //si no esta vacia, crear los servicios adicionales
+            List<ServiciosAdicionales> listaServiciosAdicionales = new ArrayList<>();
+            for (DetalleReservaAutomovil detalleReservaAutomovil : listaAux) {
+                for (ServiciosAdicionalesData serviciosAdicionalesData : serviciosAdicionalesDataList) {
+                    tipoServicioSeleccionado=tipoServicioRepo.findByIdTipo(serviciosAdicionalesData.getId());
+                    ServiciosAdicionales serviciosAdicionales = new ServiciosAdicionales(
+                            serviciosAdicionalesData.getDescripcion(),
+                            detalleReservaAutomovil,
+                            tipoServicioSeleccionado
+                    );
+                    System.out.println("servicio adicional creado: \n"
+                            + serviciosAdicionales.toString());
+                    serviciosAdicionalesRepo.save(serviciosAdicionales);
+
+                    listaServiciosAdicionales.add(serviciosAdicionales);
+                }
+            }
+
+            return listaServiciosAdicionales;
+        }
+
+    }
+
+
+
     private void modificarReservaAutomovil(List<AutomovilData> listaAutomoviles) {
         try {
+            List<DetalleReservaAutomovil> detalleAntiguoReservaAutomovil=detalleReservaAutoRepo.findByReserva_IdReserva(reservaSeleccionada.getId_reserva());
+
+            //lista de automoviles del carrito principal existente y no existente
             List<AutomovilData> existentes = new ArrayList<>();
             List<AutomovilData> no_existentes = new ArrayList<>();
-
+            //verificacion de la existencia o no existencia del automovil
             for (AutomovilData automovilData : listaAutomoviles) {
                 DetalleReservaAutomovil detalleReservaAutomovil = detalleReservaAutoRepo.findByBothId(Integer.parseInt(reservaSeleccionada.getId_reserva()), Integer.parseInt(automovilData.getId_automovil()));
                 if (detalleReservaAutomovil != null) {
+                    //eliminar el detalle existente de detalleAntiguoReservaAutomovil
+                    detalleAntiguoReservaAutomovil.remove(detalleReservaAutomovil);
+
                     existentes.add(automovilData);
                 } else {
                     no_existentes.add(automovilData);
                 }
             }
+            if (detalleAntiguoReservaAutomovil.size() > 0) {
+                //buscar y eliminar los servicios adicionales asociados al detalle de la reserva
+                for (DetalleReservaAutomovil detalleReservaAutomovil : detalleAntiguoReservaAutomovil) {
+                    int idRva = detalleReservaAutomovil.getReservaAutomovil().getIdReservaAutomovil();
+                    int idAuto = detalleReservaAutomovil.getAutomovil().getIdAutomovil();
+                    List<ServiciosAdicionales> serviciosAdicionales =serviciosAdicionalesRepo.findByIdRvaIdAuto(idRva, idAuto);
 
+                            //serviciosAdicionalesRepo.findByDetalleReservaAutomovil_IdDetalleReservaAutomovil(detalleReservaAutomovil.getIdDetalleReservaAutomovil());
+                    serviciosAdicionalesRepo.deleteAll(serviciosAdicionales);
+                }
+                //eliminar los detalles de la reserva
+                detalleReservaAutoRepo.deleteAll(detalleAntiguoReservaAutomovil);
+            }
+
+
+
+            //actualizacion de la reserva general
             ReservaAutomovil reservaAutomovilActualizada = actualizarReservaAutomovil();
 
             List<DetalleReservaAutomovil> listaAuxCrear = crearDetalleReservaAutomovil(no_existentes, reservaAutomovilActualizada);
@@ -241,6 +434,8 @@ public class ActualizarReservaAutoController implements Initializable {
             listaFinal.addAll(listaAuxCrear);
             listaFinal.addAll(listaAuxActualizar);
 
+            List<ServiciosAdicionales> listaAdicionales = crearServiciosAdicionales(listaFinal, reservaAutomovilActualizada);
+
 
 
             mostrarMensajeReservaActualizada(reservaAutomovilActualizada, listaFinal);
@@ -250,14 +445,21 @@ public class ActualizarReservaAutoController implements Initializable {
     }
 
 
-    private List<DetalleReservaAutomovil> actualizarDetalleReservaAutomovil(List<DetalleReservaAutomovil> listaAutomoviles, ReservaAutomovil reservaAutomovil) {
+    private List<DetalleReservaAutomovil> actualizarDetalleReservaAutomovil(List<AutomovilData> listaAutomoviles, ReservaAutomovil reservaAutomovil) {
         List<DetalleReservaAutomovil> listaAux = new ArrayList<>();
-        for (DetalleReservaAutomovil detalleReservaAutomovil : listaAutomoviles) {
+        for (AutomovilData automovil : listaAutomoviles) {
 
-            automovilSeleccionado = automovilRepo.findById(detalleReservaAutomovil.getAutomovil().getIdAutomovil());
-            DetalleReservaAutomovil detalleReservaAutomovil1 = new DetalleReservaAutomovil(reservaAutomovil, automovilSeleccionado, detalleReservaAutomovil.getCantidad(),
-                    detalleReservaAutomovil.getPrecioDia() ,LocalDate.now());
+            automovilSeleccionado = automovilRepo.findById(automovil.getId_automovil());
+
+            DetalleReservaAutomovil detalleReservaAutomovil1 = new DetalleReservaAutomovil(reservaAutomovil, automovilSeleccionado,automovil.getCantidad_autos(),
+                    automovil.getPrecio_diario() ,LocalDate.now());
             listaAux.add(detalleReservaAutomovil1);
+
+            detalleReservaAutomovil1.setReservaAutomovil(reservaAutomovil);
+            detalleReservaAutomovil1.setAutomovil(automovilSeleccionado);
+            detalleReservaAutomovil1.setCantidad(automovil.getCantidad_autos());
+            detalleReservaAutomovil1.setPrecioDia(automovil.getPrecio_diario());
+            detalleReservaAutomovil1.setFecha(LocalDate.now());
 
             detalleReservaAutoRepo.save(detalleReservaAutomovil1);
         }
@@ -266,28 +468,40 @@ public class ActualizarReservaAutoController implements Initializable {
     }
 
 
+    private List<DetalleReservaAutomovil> crearDetalleReservaAutomovil(List<AutomovilData> listaAutomoviles, ReservaAutomovil reservaAutomovil) {
+        List<DetalleReservaAutomovil> listaAux = new ArrayList<>();
+        for (AutomovilData automovil : listaAutomoviles) {
+            automovilSeleccionado = automovilRepo.findById(automovil.getId_automovil());
+            DetalleReservaAutomovil detalleReservaAutomovil = new DetalleReservaAutomovil(reservaAutomovil, automovilSeleccionado, automovil.getCantidad_autos(),
+                    automovil.getPrecio_diario(),LocalDate.now());
+            listaAux.add(detalleReservaAutomovil);
+            detalleReservaAutoRepo.save(detalleReservaAutomovil);
+        }
+
+        return listaAux;
+    }
+
+
     private ReservaAutomovil actualizarReservaAutomovil() {
+        //pasar datos de tipo local date a date
+        Date inicio=Date.valueOf(ga_fechainicio_date.getValue());
+        Date dev=Date.valueOf(ga_fechadev_date.getValue());
+
         String idCliente = obtenerIdCliente();
         Double precioTotal = obtenerPrecioTotal();
 
         clienteSeleccionado = clienteRepo.findById(Integer.valueOf(idCliente)).get();
 
-        reservaActualizar = reservaHotelRepo.findByIdReserva(reservaSeleccionada.getId_reserva());
-
+        reservaActualizar = reservaAutoRepo.findByIdReserva(reservaSeleccionada.getId_reserva());
         reservaActualizar.setCliente(clienteSeleccionado);
-        reservaActualizar.setHotel(hotelSeleccionado);
-        reservaActualizar.setRegimenHospedaje(regimenSeleccionado);
-        reservaActualizar.setFechaCheckin(gr_checkin_date.getValue());
-        reservaActualizar.setFechaCheckout(gr_checkout_date.getValue());
-        reservaActualizar.setImpuesto(impuesto);
-        reservaActualizar.setTotal(precioTotal);
-        reservaActualizar.setEstado("Activa");
+        reservaActualizar.setFechaInicio(inicio);
+        reservaActualizar.setFechaDevolucion(dev);
+        reservaActualizar.setOrigen(ga_origen_lbl.getText());
+        reservaActualizar.setDestino(ga_destino_lbl.getText());
+        //reservaActualizar.set
         reservaActualizar.setEmpleado(empleadoLogueado);
 
-        reservaHotelRepo.save(reservaActualizar);
-
-
-
+        reservaAutoRepo.save(reservaActualizar);
 
         return reservaActualizar;
     }
@@ -314,12 +528,12 @@ public class ActualizarReservaAutoController implements Initializable {
     }
 
 
-
+/*
     @FXML
     void crearBtn(ActionEvent event) {
         verificarReservaAutos();
-    }
-
+    }*/
+/*
     private void verificarReservaAutos() {
         //imprimir la informacion de la tabla habitaciones
         List<AutomovilData> listaAutomoviles=ga_choose_tableview.getItems();
@@ -339,7 +553,9 @@ public class ActualizarReservaAutoController implements Initializable {
             crearReservaAuto(listaAutomoviles);
         }
     }
+*/
 
+    /*
     private void crearReservaAuto(List<AutomovilData> listaAutomoviles){
         try {
             ReservaAutomovil reservaAutomovil =crearReservaAuto();
@@ -349,7 +565,8 @@ public class ActualizarReservaAutoController implements Initializable {
 
             List<DetalleReservaAutomovil> listaAux = crearDetalleReservaAutomovil(listaAutomoviles, reservaAutomovil);
 
-            List<ServiciosAdicionales> listaAdicionales = crearServiciosAdicionales(listaAux);
+            List<ServiciosAdicionales> listaAdicionales = crearServiciosAdicionales(listaAux, reservaAutomovil);
+
             mostrarMensajeReservaCreada(reservaAutomovil, listaAux, listaAdicionales);
         } catch (TransactionSystemException e) {
             manejarExcepcion(e);
@@ -390,7 +607,7 @@ public class ActualizarReservaAutoController implements Initializable {
         }
 
     }
-
+*/
 
     private Double obtenerPrecioTotal() {
         List<AutomovilData> listaAutomoviles = ga_choose_tableview.getItems();
@@ -439,48 +656,6 @@ public class ActualizarReservaAutoController implements Initializable {
 
     }*/
 
-
-    private List<ServiciosAdicionales> crearServiciosAdicionales(List<DetalleReservaAutomovil> listaAux) {
-
-        List<ServiciosAdicionalesData> serviciosAdicionalesDataList = listaServiciosAdicionales;
-        //verificar si la lista esta vacia, de ser asi, retornar nada
-        if (serviciosAdicionalesDataList.size() == 0) {
-            return null;
-        }else{
-            //si no esta vacia, crear los servicios adicionales
-            List<ServiciosAdicionales> listaServiciosAdicionales = new ArrayList<>();
-            for (DetalleReservaAutomovil detalleReservaAutomovil : listaAux) {
-                for (ServiciosAdicionalesData serviciosAdicionalesData : serviciosAdicionalesDataList) {
-                    tipoServicioSeleccionado=tipoServicioRepo.findByIdTipo(serviciosAdicionalesData.getId());
-                    ServiciosAdicionales serviciosAdicionales = new ServiciosAdicionales(
-                            serviciosAdicionalesData.getDescripcion(),
-                            detalleReservaAutomovil,
-                            tipoServicioSeleccionado
-                    );
-                    serviciosAdicionalesRepo.save(serviciosAdicionales);
-
-                    listaServiciosAdicionales.add(serviciosAdicionales);
-                }
-            }
-
-            return listaServiciosAdicionales;
-        }
-
-    }
-
-
-    private List<DetalleReservaAutomovil> crearDetalleReservaAutomovil(List<AutomovilData> listaAutomoviles, ReservaAutomovil reservaAutomovil) {
-        List<DetalleReservaAutomovil> listaAux = new ArrayList<>();
-        for (AutomovilData automovil : listaAutomoviles) {
-            automovilSeleccionado = automovilRepo.findById(automovil.getId_automovil());
-            DetalleReservaAutomovil detalleReservaAutomovil = new DetalleReservaAutomovil(reservaAutomovil, automovilSeleccionado, automovil.getCantidad_autos(),
-                    automovil.getPrecio_diario(),LocalDate.now());
-            listaAux.add(detalleReservaAutomovil);
-            detalleReservaAutoRepo.save(detalleReservaAutomovil);
-        }
-
-        return listaAux;
-    }
 
     private void manejarExcepcion(TransactionSystemException e) {
         Throwable t = e.getCause();
@@ -589,14 +764,36 @@ public class ActualizarReservaAutoController implements Initializable {
             alert.setContentText("Debe seleccionar por lo menos un automovil.");
             alert.show();
         }else {
+            //buscar servicios adicionales asociados al carrito existente
+            List<ServiciosAdicionalesData> listaServiciosAdicionales = new ArrayList<>();
+            List<AutomovilData> listaAutomoviles = ga_choose_tableview.getItems();
+            for (AutomovilData automovilData : listaAutomoviles) {
+                List<ServiciosAdicionales> serviciosAdicionales = serviciosAdicionalesRepo.findByIdRvaIdAuto(Integer.parseInt(reservaSeleccionada.getId_reserva()), Integer.parseInt(automovilData.getId_automovil()));
+                for (ServiciosAdicionales serviciosAdicional : serviciosAdicionales) {
+                    if(serviciosAdicional!=null){
+                        ServiciosAdicionalesData serviciosAdicionalesData = new ServiciosAdicionalesData(
+                                String.valueOf(serviciosAdicional.getTipoServicio().getIdTipo()),
+                                serviciosAdicional.getTipoServicio().getNombreServicio(),
+                                serviciosAdicional.getTipoServicio().getDescripcion(),
+                                serviciosAdicional.getTipoServicio().getPrecio(),
+                                serviciosAdicional.getDescripcion()
+                                     );
+                        listaServiciosAdicionales.add(serviciosAdicionalesData);
+                        System.out.println("servicio: " + serviciosAdicionalesData.toString());
+                    }
+                }
+            }
+           // listaServiciosAdicionales=this.listaServiciosAdicionales;
+           //  this.listaServiciosAdicionales=listaServiciosAdicionales;
+
             //abrir ventana servicios
-            abrirVentanaServicios(event, empleadoLogueado, listaServiciosAdicionales);
+            abrirVentanaServicios(event, empleadoLogueado, listaServiciosAdicionales, "Actualizar");
         }
         //  gr_servicios_btn.getScene().getWindow().hide();
     }
 
-    private void abrirVentanaServicios(ActionEvent event, Empleado empleado, List<ServiciosAdicionalesData> listaServicios) {
-        sceneController.cambiarAVentanaServiciosAdicionales(event, empleado, listaServicios);
+    private void abrirVentanaServicios(ActionEvent event, Empleado empleado, List<ServiciosAdicionalesData> listaServicios, String tipoVentana) {
+        sceneController.cambiarAVentanaServiciosAdicionales(event, empleado, listaServicios, tipoVentana);
     }
 
     private void abrirVentanaVolver(ActionEvent event, Empleado empleado) {
@@ -1020,11 +1217,11 @@ public class ActualizarReservaAutoController implements Initializable {
         }
     }
 
-    public void devolverAReservaAuto(ObservableList<ServiciosAdicionalesData> serviciosAdicionalesDataList) {
+    public void devolverAReservaAutoActualizar(ObservableList<ServiciosAdicionalesData> serviciosAdicionalesDataList) {
         listaServiciosAdicionales = serviciosAdicionalesDataList;
         //sout a la lista
         for (ServiciosAdicionalesData s : serviciosAdicionalesDataList) {
-            System.out.println("los servicios seleccionados son: "+s.getNombre() + " " + s.getInformacion() + " " + s.getPrecio() + " " + s.getDescripcion());
+            System.out.println("los servicios seleccionados son: NOMBRE "+s.getNombre() + " INFO " + s.getInformacion() + " PRECIO " + s.getPrecio() + " DESCRIPCION " + s.getDescripcion());
         }
     }
 }

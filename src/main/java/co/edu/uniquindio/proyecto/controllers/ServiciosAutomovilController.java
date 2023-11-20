@@ -35,12 +35,17 @@ public class ServiciosAutomovilController implements Initializable {
     private CrearReservaAutoController crearController;
 
     @Autowired
+    private ActualizarReservaAutoController actualizarController;
+
+    @Autowired
     private TipoServicioRepo serviciosRepo;
 
     /*ENTIDADES*/
     private Empleado empleadoLogueado;
 
     private List<ServiciosAdicionalesData> llegadaServiciosAdicionales;
+
+    private String tipoVentana;
 
 
     /*FXML COMPONENTES*/
@@ -124,15 +129,24 @@ public class ServiciosAutomovilController implements Initializable {
 
         //recuperar la lista de servicios adicionales de la tabla gs_choose_tablview
         ObservableList<ServiciosAdicionalesData> serviciosAdicionalesDataList = gs_choose_tableview.getItems();
-        //enviar la lista de servicios adicionales a la ventana de crear reserva de automovil
-        devolverACrearReservaAutomovil( serviciosAdicionalesDataList);
 
+        if(tipoVentana.equals("Crear")){
+            //enviar la lista de servicios adicionales a la ventana de crear reserva de automovil
+            devolverACrearReservaAutomovil( serviciosAdicionalesDataList);
+        }else if(tipoVentana.equals("Actualizar")){
+
+            devolverAActualizarReservaAutomovil(serviciosAdicionalesDataList);
+        }
         //cerrar la ventana de servicios adicionales
         gr_guardarservicios_btn.getScene().getWindow().hide();
     }
 
+    private void devolverAActualizarReservaAutomovil(ObservableList<ServiciosAdicionalesData> serviciosAdicionalesDataList) {
+        actualizarController.devolverAReservaAutoActualizar(serviciosAdicionalesDataList);
+    }
+
     private void devolverACrearReservaAutomovil( ObservableList<ServiciosAdicionalesData> serviciosAdicionalesDataList) {
-        crearController.devolverAReservaAuto(serviciosAdicionalesDataList);
+        crearController.devolverAReservaAutoCreacion(serviciosAdicionalesDataList);
     }
 
 
@@ -333,7 +347,9 @@ public class ServiciosAutomovilController implements Initializable {
         }
     }
 
-    public void displayEmployeeIDUsername(Empleado empleado, List<ServiciosAdicionalesData>serviciosAdicionalesDataList) {
+    public void displayEmployeeIDUsername(Empleado empleado, List<ServiciosAdicionalesData>serviciosAdicionalesDataList, String tipoVentana ) {
+        this.tipoVentana= tipoVentana;
+
         llegadaServiciosAdicionales = serviciosAdicionalesDataList;
 
         //cargar los datos que ya estaban seleccionados

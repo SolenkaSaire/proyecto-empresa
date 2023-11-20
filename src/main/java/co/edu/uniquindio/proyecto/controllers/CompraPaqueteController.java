@@ -40,6 +40,7 @@ import java.util.ResourceBundle;
 @Component
 public class CompraPaqueteController  implements Initializable {
 
+
     @FXML
     private AnchorPane compra_paquete_form;
 
@@ -166,6 +167,16 @@ public class CompraPaqueteController  implements Initializable {
     @FXML
     private Label username_lbl;
 
+
+
+
+    @FXML
+    void comboPaisHotelListener(ActionEvent event) {
+
+    }
+
+
+
     @Autowired
     private SceneController sceneController;
 
@@ -211,49 +222,6 @@ public class CompraPaqueteController  implements Initializable {
         cpaquetes_estado.setCellValueFactory(new PropertyValueFactory<>("estado"));
 
         cpaquetes_tableview.setItems(compraPaqueteData);
-    }
-
-    @FXML
-    void compraPaqueteSearch(ActionEvent event) {
-        FilteredList<CompraPaqueteData> filter = new FilteredList<>(compraPaqueteData, p -> true);
-
-        gp_search_field.textProperty().addListener((Observable, oldValue, newValue) -> {
-            filter.setPredicate(compraPaquete -> {
-                if (newValue == null || newValue.isEmpty()) {
-                    return true;
-                }
-
-                String lowerCaseFilter = newValue.toLowerCase();
-
-                if (compraPaquete.getId_compra().toLowerCase().contains(lowerCaseFilter)) {
-                    return true;
-                } else if (compraPaquete.getCedula_cliente().toLowerCase().contains(lowerCaseFilter)) {
-                    return true;
-                } else if (compraPaquete.getPaquete().toLowerCase().contains(lowerCaseFilter)) {
-                    return true;
-                } else if (compraPaquete.getFecha_paquete().toLowerCase().contains(lowerCaseFilter)) {
-                    return true;
-                } else if (compraPaquete.getFecha_compra().toLowerCase().contains(lowerCaseFilter)) {
-                    return true;
-                } else if (compraPaquete.getCentro_turistico().toLowerCase().contains(lowerCaseFilter)) {
-                    return true;
-                } else if (compraPaquete.getMetodo_pago().toLowerCase().contains(lowerCaseFilter)) {
-                    return true;
-                } else if (Integer.toString(compraPaquete.getCantidad_boletas()).contains(lowerCaseFilter)) {
-                    return true;
-                } else if (Double.toString(compraPaquete.getPrecio_total()).contains(lowerCaseFilter)) {
-                    return true;
-                } else if (compraPaquete.getEstado().toLowerCase().contains(lowerCaseFilter)) {
-                    return true;
-                } else {
-                    return false;
-                }
-            });
-        });
-
-        SortedList<CompraPaqueteData> sortedData = new SortedList<>(filter);
-        sortedData.comparatorProperty().bind(cpaquetes_tableview.comparatorProperty());
-        cpaquetes_tableview.setItems(sortedData);
     }
 
     @FXML
@@ -394,6 +362,79 @@ public class CompraPaqueteController  implements Initializable {
             e.printStackTrace();
         }
     }
+/*
+
+    @FXML
+    void compraPaqueteSearch(ActionEvent event) {
+
+    }*/
+    @FXML
+    public void compraPaqueteSearch(javafx.event.ActionEvent actionEvent) {
+
+        FilteredList<CompraPaqueteData> filter = new FilteredList<>(compraPaqueteData, p -> true);
+
+        gp_search_field.textProperty().addListener((Observable, oldValue, newValue) -> {
+            filter.setPredicate(compraPaquete -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (compraPaquete.getId_compra().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (compraPaquete.getCedula_cliente().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (compraPaquete.getPaquete().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (compraPaquete.getFecha_paquete().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (compraPaquete.getFecha_compra().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (compraPaquete.getCentro_turistico().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (compraPaquete.getMetodo_pago().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (Integer.toString(compraPaquete.getCantidad_boletas()).contains(lowerCaseFilter)) {
+                    return true;
+                } else if (Double.toString(compraPaquete.getPrecio_total()).contains(lowerCaseFilter)) {
+                    return true;
+                } else if (compraPaquete.getEstado().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+        });
+
+        SortedList<CompraPaqueteData> sortedData = new SortedList<>(filter);
+        sortedData.comparatorProperty().bind(cpaquetes_tableview.comparatorProperty());
+        cpaquetes_tableview.setItems(sortedData);
+    }
+
+    @FXML
+    void crearBtn(javafx.event.ActionEvent actionEvent) {
+        abrirVentanaCrearCompraPaquete(actionEvent, empleadoLogin);
+        gp_crear_btn.getScene().getWindow().hide();
+
+    }
+
+    private void abrirVentanaCrearCompraPaquete(javafx.event.ActionEvent event, Empleado empleado) {
+        sceneController.cambiarAVentanaCrearCompraPaquete(event, empleado);
+    }
+
+    @FXML
+    void modificarBtn(javafx.event.ActionEvent actionEvent) {
+    }
+
+    @FXML
+    void buscarBtn(javafx.event.ActionEvent actionEvent) {
+    }
+
+    @FXML
+    void eliminarBtn(javafx.event.ActionEvent actionEvent) {
+    }
+
 
 }
 

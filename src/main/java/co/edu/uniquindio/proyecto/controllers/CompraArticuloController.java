@@ -322,4 +322,27 @@ public class CompraArticuloController implements Initializable {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    void crearBtn(ActionEvent actionEvent) {
+        abrirVentanaCrearCompraArticulo(actionEvent, empleadoLogin);
+        ga_crear_btn.getScene().getWindow().hide();
+
+    }
+
+    private void abrirVentanaCrearCompraArticulo(ActionEvent event, Empleado empleado) {
+        sceneController.cambiarAVentanaCrearCompraArticulo(event, empleado);
+    }
+
+    @FXML
+    void modificarBtn(ActionEvent actionEvent) {
+    }
+
+    @FXML
+    void buscarBtn(ActionEvent actionEvent) {
+    }
+
+    @FXML
+    void eliminarBtn(ActionEvent actionEvent) {
+    }
 }

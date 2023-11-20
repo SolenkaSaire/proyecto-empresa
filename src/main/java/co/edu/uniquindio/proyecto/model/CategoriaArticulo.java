@@ -13,7 +13,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@ToString
 public class CategoriaArticulo implements Serializable {
 
     @Id
@@ -28,8 +27,22 @@ public class CategoriaArticulo implements Serializable {
     @Column(name = "DESCRIPCION", nullable = false, length = 110)
     private String descripcion;
 
+    /*
     @OneToMany(mappedBy = "categoriaArticulo", cascade = CascadeType.ALL)
     private List<ArticuloTuristico> articulosTuristicos;
+*/
 
+    @OneToMany(mappedBy = "categoriaArticulo", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<ArticuloTuristico> articulosTuristicos;
+
+
+    @Override
+    public String toString() {
+        return "CategoriaArticulo{" +
+                "codigoCat=" + codigoCat +
+                ", nombre='" + nombre + '\'' +
+                ", descripcion='" + descripcion + '\'' +
+                '}';
+    }
 
 }
