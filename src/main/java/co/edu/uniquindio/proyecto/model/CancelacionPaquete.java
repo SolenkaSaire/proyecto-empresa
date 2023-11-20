@@ -15,9 +15,9 @@ import java.util.Date;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString
 public class CancelacionPaquete implements Serializable {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "cancelacion_paquete_id_seq")
+    @SequenceGenerator(name = "cancelacion_paquete_id_seq", sequenceName = "cancelacion_paquete_id_seq", allocationSize = 1)
     @EqualsAndHashCode.Include
     @Column(name = "ID_CANCELACION", nullable = false)
     private int idCancelacion;
@@ -45,6 +45,14 @@ public class CancelacionPaquete implements Serializable {
     @ManyToOne
     @JoinColumn(name = "ID_COMPRA", referencedColumnName = "ID_COMPRA", insertable = false, updatable = false)
     private Compra compra;
+
+    public CancelacionPaquete(int idCompra, Date fechaCancelacion, double costo, String motivo, int polCancelId) {
+        this.idCompra = idCompra;
+        this.fechaCancelacion = fechaCancelacion;
+        this.costo = costo;
+        this.motivo = motivo;
+        this.polCancelId = polCancelId;
+    }
 
 
 }

@@ -5,10 +5,7 @@ import co.edu.uniquindio.proyecto.dto.AutomovilData;
 import co.edu.uniquindio.proyecto.dto.HabitacionHotelData;
 import co.edu.uniquindio.proyecto.dto.PaqueteData;
 import co.edu.uniquindio.proyecto.model.*;
-import co.edu.uniquindio.proyecto.repositories.ClienteRepo;
-import co.edu.uniquindio.proyecto.repositories.CompraPaqueteRepo;
-import co.edu.uniquindio.proyecto.repositories.DetalleCompraPaqueteRepo;
-import co.edu.uniquindio.proyecto.repositories.PaqueteTuristicoRepo;
+import co.edu.uniquindio.proyecto.repositories.*;
 import jakarta.validation.ConstraintViolationException;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -43,6 +40,9 @@ public class CrearCompraPaqueteController implements Initializable {
     private ClienteRepo clienteRepo;
     @Autowired
     private SceneController sceneController;
+
+    @Autowired
+    private DescuentoPaqueteRepo descuentoCompraPaqueteRepo;
 
     @Autowired
     private DetalleCompraPaqueteRepo detalleCompraPaqueteRepo;
@@ -166,10 +166,34 @@ public class CrearCompraPaqueteController implements Initializable {
         try{
             Compra compra = creacionCompraArticulo();
             List<DetalleCompraPaquete> listaDetalleCompra = creacionDetalleCompraArticulo(compra, listaPaquetes);
+
+           // DescuentoCompraPaquete descuento= creacionDescuentoPaquete(compra, listaDetalleCompra);
             mostrarMensajeCompraCreada(compra, listaDetalleCompra);
         }catch  (TransactionSystemException e) {
             manejarExcepcion(e);
         }
+    }
+
+    private DescuentoCompraPaquete creacionDescuentoPaquete(Compra compra , List<DetalleCompraPaquete> listaDetalleCompra) {
+        int cantidadBoletas = 0;
+        //iterar sobre la lista para obtener la cantidad total de boletas
+        for (DetalleCompraPaquete detalleCompra : listaDetalleCompra) {
+            cantidadBoletas += detalleCompra.getCantidad();
+        }
+        //fecha actual tipo date
+        Date hoy= new Date(System.currentTimeMillis());
+
+
+        DescuentoCompraPaquete descuentoCompraPaquete = new DescuentoCompraPaquete(
+                compra.getIdCompra(),
+                cantidadBoletas,
+                hoy,
+                "Descuento por compra de paquetes",
+                0
+        );
+
+        descuentoCompraPaqueteRepo.save(descuentoCompraPaquete);
+        return descuentoCompraPaquete;
     }
 
     private List<DetalleCompraPaquete> creacionDetalleCompraArticulo(Compra compra, List<PaqueteData> listaPaquetes) {
@@ -181,8 +205,8 @@ public class CrearCompraPaqueteController implements Initializable {
                     compra,
                     paqueteData.getDetalle(),
                     paqueteData.getCantidad_boletas(),
-                    "Pendiente"
-
+                    "Pendiente",
+                    0.0
             );
             listaDetalleCompra.add(detalleCompra);
 

@@ -6,6 +6,7 @@ import co.edu.uniquindio.proyecto.dto.ReservaHotelData;
 import co.edu.uniquindio.proyecto.model.Compra;
 import co.edu.uniquindio.proyecto.model.Empleado;
 import co.edu.uniquindio.proyecto.repositories.CompraArticuloRepo;
+import co.edu.uniquindio.proyecto.repositories.CompraPaqueteRepo;
 import co.edu.uniquindio.proyecto.repositories.ReservaHotelRepo;
 import com.sun.source.tree.ContinueTree;
 import javafx.application.Platform;
@@ -37,6 +38,8 @@ public class CompraArticuloController implements Initializable {
 
 
     @Autowired
+    private CompraPaqueteRepo compraPaqueteRepo;
+    @Autowired
     private CompraArticuloRepo compraArticuloRepo;
 
     @Autowired
@@ -45,10 +48,11 @@ public class CompraArticuloController implements Initializable {
     Empleado empleadoLogin;
     private static final String VALIDACION_DATOS = "Validacion de datos";
 
-
-    private CompraArticuloData compraArtData;
-
     private Compra compraSeleccionada;
+
+  //  private CompraArticuloData compraArtData;
+
+    private CompraArticuloData compraArticuloSeleccionada;
 
     public ObservableList<CompraArticuloData> compraArticuloData = FXCollections.observableArrayList();
 
@@ -333,10 +337,17 @@ public class CompraArticuloController implements Initializable {
 
     @FXML
     void compraArticuloSelectData(MouseEvent event){
-        compraArtData = carticulos_tableview.getSelectionModel().getSelectedItem();
+        compraArticuloSeleccionada = carticulos_tableview.getSelectionModel().getSelectedItem();
+       // compraArtData = carticulos_tableview.getSelectionModel().getSelectedItem();
+        CompraArticuloData compraArticulo = carticulos_tableview.getSelectionModel().getSelectedItem();
 
-        if(compraArtData!=null){
-            compraSeleccionada = compraArticuloRepo.obtener(Integer.parseInt(compraArtData.getId_compra()));
+       // System.out.println("compraArtData: " + compraArt.getId_compra());
+
+        if(compraArticuloSeleccionada!=null){
+
+            int id = Integer.parseInt(compraArticulo.getId_compra());
+            System.out.println("id: " + id);
+            compraSeleccionada = compraPaqueteRepo.obtener(id);//.obtenerById(id);
             System.out.println("compra seleccionada: " + compraSeleccionada.toString());
         }
 
@@ -362,8 +373,8 @@ public class CompraArticuloController implements Initializable {
 
     @FXML
     void modificarBtn(ActionEvent actionEvent) {
-        if(compraArtData != null){
-            abrirVentanaModificarCompraArticulo(actionEvent, empleadoLogin, compraArtData);
+        if(compraArticuloSeleccionada != null){
+            abrirVentanaModificarCompraArticulo(actionEvent, empleadoLogin, compraArticuloSeleccionada);
             ga_modificar_btn.getScene().getWindow().hide();
         }else{
             mostrarMensaje(VALIDACION_DATOS, VALIDACION_DATOS, "Por favor, seleccione una reserva para actualizar",

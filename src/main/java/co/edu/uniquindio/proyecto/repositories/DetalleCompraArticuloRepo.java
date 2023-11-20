@@ -15,4 +15,6 @@ public interface DetalleCompraArticuloRepo extends JpaRepository<DetalleCompra, 
     @Query("select u from DetalleCompra u where u.compra.idCompra = ?1")
     List<DetalleCompra> findByCompraId(Integer idCompra);
 
+    @Query("select u from DetalleCompra  u where u.articuloTuristico.idArticulo = ?1 and u.compra.idCompra = ?2" )
+    DetalleCompra findByBothId(Integer idArticulo, Integer idCompra);
 }

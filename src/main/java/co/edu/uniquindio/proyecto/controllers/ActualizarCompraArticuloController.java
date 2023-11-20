@@ -40,6 +40,8 @@ public class ActualizarCompraArticuloController implements Initializable {
 
 
     @Autowired
+    private CompraPaqueteRepo compraPaqueteRepo;
+    @Autowired
     private CompraArticuloRepo compraArticuloRepo;
     @Autowired
     private ClienteRepo clienteRepo;
@@ -49,6 +51,8 @@ public class ActualizarCompraArticuloController implements Initializable {
     @Autowired
     private DetalleCompraArticuloRepo detalleCompraArticuloRepo;
 
+    @Autowired
+    private ArticuloTuristicoRepo articuloRepo;
     CompraArticuloData compraSeleccionada;
 
 
@@ -175,13 +179,14 @@ public class ActualizarCompraArticuloController implements Initializable {
 
     }
     private void modificarCompraArticulo(List<ArticuloData> listaArticulos) {
+
         try{
             List<ArticuloData> existentes = new ArrayList<>();
             List<ArticuloData> no_existentes = new ArrayList<>();
             List<ArticuloData> antiguosPorEliminar = new ArrayList<>(listaArticulos);
 
             for(ArticuloData articuloData: listaArticulos){
-                DetalleCompra detalleArticuloList = detalleCompraArticuloRepo.findByBothId(Integer.parseInt(compraArticuloData.getId_compra()), Integer.parseInt(articuloData.getId_articulo()));
+                DetalleCompra detalleArticuloList = detalleCompraArticuloRepo.findByBothId(Integer.parseInt(articuloData.getId_articulo()), Integer.parseInt(compraSeleccionada.getId_compra()));
                 if(detalleArticuloList == null){
                     no_existentes.add(articuloData);
                 }else{
@@ -192,7 +197,7 @@ public class ActualizarCompraArticuloController implements Initializable {
 
             if(antiguosPorEliminar.size() > 0) {
                 for (ArticuloData articuloData : antiguosPorEliminar) {
-                    DetalleCompra detalleArticulo = detalleCompraArticuloRepo.findByBothId(Integer.parseInt(compraArticuloData.getId_compra()), Integer.parseInt(articuloData.getId_articulo()));
+                    DetalleCompra detalleArticulo = detalleCompraArticuloRepo.findByBothId(Integer.parseInt(articuloData.getId_articulo()), Integer.parseInt(compraSeleccionada.getId_compra()));
                     if (detalleArticulo != null) {
                         detalleCompraArticuloRepo.delete(detalleArticulo);
                     }
@@ -215,10 +220,39 @@ public class ActualizarCompraArticuloController implements Initializable {
         }
     }
 
+    private List<DetalleCompra> actualizacionDetalleCompraArticulo(Compra compra, List<ArticuloData> existentes) {
+        List<DetalleCompra> listaDetalleCompra = new ArrayList<>();
+        for (ArticuloData articuloData : existentes) {
+            DetalleCompra detalleCompra = detalleCompraArticuloRepo.findByBothId(Integer.parseInt(articuloData.getId_articulo()), Integer.parseInt(compraSeleccionada.getId_compra()));
+            detalleCompra.setArticuloTuristico(articuloRepo.obtener(Integer.parseInt(articuloData.getId_articulo())));
+            detalleCompra.setCompra(compra);
+            detalleCompra.setPrecioUnidad(articuloData.getPrecio());
+            detalleCompra.setCantidad(articuloData.getCantidad_articulos());
+
+            detalleCompraArticuloRepo.save(detalleCompra);
+            listaDetalleCompra.add(detalleCompra);
+        }
+
+        return listaDetalleCompra;
+    }
+
     private List<DetalleCompra> creacionDetalleCompraArticulo(Compra compra, List<ArticuloData> noExistentes) {
+        List<DetalleCompra> listaDetalleCompra = new ArrayList<>();
+        for (ArticuloData articuloData : noExistentes) {
+            DetalleCompra detalleCompra = new DetalleCompra();
+            detalleCompra.setArticuloTuristico(articuloRepo.obtener(Integer.parseInt(articuloData.getId_articulo())));
+            detalleCompra.setCompra(compra);
+            detalleCompra.setPrecioUnidad(articuloData.getPrecio());
+            detalleCompra.setCantidad(articuloData.getCantidad_articulos());
+
+            detalleCompraArticuloRepo.save(detalleCompra);
+            listaDetalleCompra.add(detalleCompra);
+        }
+        return listaDetalleCompra;
     }
 
     private Compra actualizacionCompraArticulo() {
+        return null;
     }
 
 
@@ -314,7 +348,8 @@ public class ActualizarCompraArticuloController implements Initializable {
             }
         }
 
-        Compra compra = compraArticuloRepo.obtener(Integer.parseInt(compraSeleccionada.getId_compra()));
+        Compra compra = compraPaqueteRepo.obtener(Integer.parseInt(compraSeleccionada.getId_compra()));
+                //compraArticuloRepo.obtenerById(Integer.parseInt(compraSeleccionada.getId_compra()));
 
               //  compraPaqueteRepo.obtener(Integer.parseInt(compraPaqueteData.getId_compra()));
         ca_descripcion_lbl.setText(compra.getDescripcion());

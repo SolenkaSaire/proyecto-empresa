@@ -4,6 +4,7 @@ import co.edu.uniquindio.proyecto.dto.CompraArticuloData;
 import co.edu.uniquindio.proyecto.dto.CompraPaqueteData;
 import co.edu.uniquindio.proyecto.dto.ReservaHotelData;
 import co.edu.uniquindio.proyecto.model.*;
+import co.edu.uniquindio.proyecto.repositories.CancelacionPaqueteRepo;
 import co.edu.uniquindio.proyecto.repositories.CompraPaqueteRepo;
 import co.edu.uniquindio.proyecto.repositories.ReservaHotelRepo;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -14,6 +15,7 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.chart.ScatterChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
@@ -71,6 +73,10 @@ public class CompraPaqueteController  implements Initializable {
     @FXML
     private TableColumn<CompraPaqueteData, Double> cpaquetes_total;
 
+
+
+    @FXML
+    private Button gp_cancelar_btn;
     @FXML
     private Label current_ventana_lbl;
 
@@ -162,6 +168,56 @@ public class CompraPaqueteController  implements Initializable {
     private Label username_lbl;
 
 
+    @Autowired
+    private CancelacionPaqueteRepo cancelacionPaqueteRepo;
+
+
+
+    @FXML
+    void cancelarBtn(javafx.event.ActionEvent actionEvent) {
+
+
+        //validar que se haya seleccionado una reserva
+        if (compraPaqueteDataSeleccionada != null) {
+
+            try
+            {
+                String motivo = "";
+                //abrir ventana que permita ingresar un string motivo
+                TextInputDialog dialog = new TextInputDialog();
+                dialog.setTitle("Cancelacion de compra");
+                dialog.setHeaderText("Por favor, ingrese el motivo de la cancelacion");
+                dialog.setContentText("Motivo:");
+                dialog.showAndWait();
+                motivo = dialog.getEditor().getText();
+
+
+                //cancelar compra creando una nueva cancelacion paquete
+                CancelacionPaquete cancelacionPaquete = new CancelacionPaquete(
+                        compraSeleccionada.getIdCompra(),
+                        Date.valueOf(LocalDate.now()),
+                        0,
+                        motivo,
+                        0
+                );
+                cancelacionPaqueteRepo.save(cancelacionPaquete);
+                //validar q no hayan errores al guardar la cancelacion
+
+
+                mostrarMensaje(VALIDACION_DATOS, VALIDACION_DATOS, "Compra cancelada exitosamente",
+                        Alert.AlertType.INFORMATION);
+            }catch (Exception e){
+                mostrarMensaje(VALIDACION_DATOS, VALIDACION_DATOS, "Error al cancelar la compra",
+                        Alert.AlertType.ERROR);
+            }
+
+        } else {
+            mostrarMensaje(VALIDACION_DATOS, VALIDACION_DATOS, "Por favor, seleccione una compra para cancelar",
+                    Alert.AlertType.WARNING);
+        }
+
+
+    }
 
 
     @FXML

@@ -16,7 +16,7 @@ import java.util.Map;
 public interface CompraArticuloRepo extends JpaRepository<Compra, Integer>{
 
     @Query("select n from Compra n where n.idCompra =: id")
-    Compra obtener (Integer id);
+    Compra obtenerById (@Param("id") Integer id);
 
     @Query("SELECT co.idCompra as id_compra, cl.peCedulaPsna as cedula_cliente," +
             " ca.nombre as categoria, at.nombre as articulo_turistico, co.fecha as fecha_compra," +

@@ -17,7 +17,8 @@ import java.util.Date;
 public class CancelacionHospedaje implements Serializable {
 
         @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "cancelacion_hospedaje_id_seq")
+        @SequenceGenerator(name = "cancelacion_hospedaje_id_seq", sequenceName = "cancelacion_hospedaje_id_seq", allocationSize = 1)
         @EqualsAndHashCode.Include
         @Column(name = "ID_CANCELACION", nullable = false)
         private int idCancelacion;
@@ -47,5 +48,13 @@ public class CancelacionHospedaje implements Serializable {
         @JoinColumn(name = "RVA_ID_RVA", referencedColumnName = "ID_RESERVA", insertable = false, updatable = false)
         private ReservaHotel reserva;
 
+
+        public CancelacionHospedaje(int rvaIdRva, Date fechaCancelacion, double costo, String motivo, int polCancelacionId) {
+            this.rvaIdRva = rvaIdRva;
+            this.fechaCancelacion = fechaCancelacion;
+            this.costo = costo;
+            this.motivo = motivo;
+            this.polCancelacionId = polCancelacionId;
+        }
 
 }

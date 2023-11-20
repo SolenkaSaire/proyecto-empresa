@@ -17,7 +17,8 @@ import java.util.Date;
 public class DescuentoCompraPaquete implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "descuento_seq")
+    @SequenceGenerator(name = "descuento_seq", sequenceName = "seq_descuento_compra_paquete", allocationSize = 1)
     @EqualsAndHashCode.Include
     @Column(name = "ID_DESCUENTO", nullable = false)
     private int idDescuento;
@@ -46,5 +47,13 @@ public class DescuentoCompraPaquete implements Serializable {
     @JoinColumn(name = "DNTO_IDPOLITICA", referencedColumnName = "POLITICA_IDPOLITICA", insertable = false, updatable = false)
     private PoliticaDescuento politicaDescuento;
 
+
+    public DescuentoCompraPaquete(int idCompra, int cantidad, Date fecha, String descripcion, int dntoIdPolitica) {
+        this.idCompra = idCompra;
+        this.cantidad = cantidad;
+        this.fecha = fecha;
+        this.descripcion = descripcion;
+        this.dntoIdPolitica = dntoIdPolitica;
+    }
 
 }

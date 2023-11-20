@@ -18,5 +18,5 @@ public interface DetalleCompraPaqueteRepo extends JpaRepository<DetalleCompraPaq
 
 
     @Query("select u from DetalleCompraPaquete u where u.paqueteTuristico.idPaqueteTuristico = ?1 and u.compra.idCompra = ?2")
-    DetalleCompraPaquete findByBothId(Integer IdCompra, Integer IdPaquete);
+    DetalleCompraPaquete findByBothId(Integer IdPaquete, Integer IdCompra);
 }

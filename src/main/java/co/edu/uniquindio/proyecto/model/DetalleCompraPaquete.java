@@ -38,5 +38,8 @@ public class DetalleCompraPaquete implements Serializable {
     @Column(name = "ESTADO", nullable = false, length = 10)
     private String estado;
 
+    @Column(name = "DESCUENTO", nullable = true)
+    private Double descuento;
+
 
 }

@@ -174,7 +174,7 @@ public class ActualizarCompraPaqueteController implements Initializable {
             List<PaqueteData>antiguosPorEliminar =listaPaquetes;
 
             for(PaqueteData paqueteData: listaPaquetes){
-               DetalleCompraPaquete detallePaquetelist= detalleCompraPaqueteRepo.findByBothId(Integer.parseInt(compraPaqueteData.getId_compra()), Integer.parseInt(paqueteData.getId_paquete()));
+               DetalleCompraPaquete detallePaquetelist= detalleCompraPaqueteRepo.findByBothId(Integer.parseInt(paqueteData.getId_paquete()),Integer.parseInt(compraPaqueteData.getId_compra()));
                 if(detallePaquetelist==null){
                     no_existentes.add(paqueteData);
                 }else{
@@ -185,7 +185,7 @@ public class ActualizarCompraPaqueteController implements Initializable {
 
             if(antiguosPorEliminar.size()>0) {
                 for (PaqueteData paqueteData : antiguosPorEliminar) {
-                    DetalleCompraPaquete detallePaquete = detalleCompraPaqueteRepo.findByBothId(Integer.parseInt(compraPaqueteData.getId_compra()), Integer.parseInt(paqueteData.getId_paquete()));
+                    DetalleCompraPaquete detallePaquete = detalleCompraPaqueteRepo.findByBothId(Integer.parseInt(paqueteData.getId_paquete()),Integer.parseInt(compraPaqueteData.getId_compra()));
                     if (detallePaquete != null) {
                         detalleCompraPaqueteRepo.delete(detallePaquete);
                     }
@@ -232,7 +232,6 @@ public class ActualizarCompraPaqueteController implements Initializable {
     private List<DetalleCompraPaquete> creacionDetalleCompraPaquete(Compra compra, List<PaqueteData> noExistentes) {
         List<DetalleCompraPaquete> listaDetalleCompra = new ArrayList<>();
         for (PaqueteData paqueteData : noExistentes) {
-
 
             DetalleCompraPaquete detalleCompra = new DetalleCompraPaquete();
             detalleCompra.setPaqueteTuristico(paqueteRepo.obtener(Integer.parseInt(paqueteData.getId_paquete())));

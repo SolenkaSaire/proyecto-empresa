@@ -101,14 +101,15 @@
                                                 <String fx:value="white-bg" />
                                             </styleClass>
                                             <children>
-                                                <Button fx:id="gr_crear_btn" layoutX="243.0" layoutY="17.0" mnemonicParsing="false" onAction="#crearBtn" prefHeight="26.0" prefWidth="96.0" styleClass="add-btn" stylesheets="@reservaDesign.css" text="Crear" />
-                                                <Button fx:id="gr_modificar_btn" layoutX="508.0" layoutY="17.0" mnemonicParsing="false" onAction="#actualizarBtn" prefHeight="26.0" prefWidth="97.0" styleClass="update-btn" stylesheets="@reservaDesign.css" text="Modificar" />
-                                                <Button fx:id="gr_buscar_btn" layoutX="373.0" layoutY="17.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="96.0" styleClass="search-btn" stylesheets="@reservaDesign.css" text="Buscar" />
-                                                <Button fx:id="gr_eliminar_btn" layoutX="639.0" layoutY="17.0" mnemonicParsing="false" onAction="#eliminarBtn" prefHeight="26.0" prefWidth="100.0" styleClass="delete-btn" stylesheets="@reservaDesign.css" text="Eliminar" />
+                                                <Button fx:id="gr_crear_btn" layoutX="165.0" layoutY="18.0" mnemonicParsing="false" onAction="#crearBtn" prefHeight="26.0" prefWidth="96.0" styleClass="add-btn" stylesheets="@reservaDesign.css" text="Crear" />
+                                                <Button fx:id="gr_modificar_btn" layoutX="390.0" layoutY="18.0" mnemonicParsing="false" onAction="#actualizarBtn" prefHeight="26.0" prefWidth="97.0" styleClass="update-btn" stylesheets="@reservaDesign.css" text="Modificar" />
+                                                <Button fx:id="gr_buscar_btn" layoutX="278.0" layoutY="18.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="96.0" styleClass="search-btn" stylesheets="@reservaDesign.css" text="Buscar" />
+                                                <Button fx:id="gr_eliminar_btn" layoutX="506.0" layoutY="18.0" mnemonicParsing="false" onAction="#eliminarBtn" prefHeight="26.0" prefWidth="100.0" styleClass="delete-btn" stylesheets="@reservaDesign.css" text="Eliminar" />
                                                 <Label layoutX="22.0" layoutY="20.0" styleClass="header-1" stylesheets="@reservaDesign.css" text="Gestionar Reservas">
                                                     <font>
                                                         <Font size="14.0" />
                                                     </font></Label>
+                                    <Button fx:id="gr_cancelar_btn" layoutX="694.0" layoutY="17.0" mnemonicParsing="false" onAction="#cancelarBtn" prefHeight="26.0" prefWidth="134.0" styleClass="cancel-btn" stylesheets="@reservaDesign.css" text="Cancelar Reserva" />
                                             </children>
                                         </AnchorPane>
                                         <AnchorPane layoutX="9.0" layoutY="81.0" prefHeight="494.0" prefWidth="813.0" stylesheets="@reservaDesign.css" AnchorPane.bottomAnchor="13.0" AnchorPane.leftAnchor="9.0" AnchorPane.rightAnchor="32.0" AnchorPane.topAnchor="81.0">

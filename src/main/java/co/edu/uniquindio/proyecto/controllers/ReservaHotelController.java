@@ -89,6 +89,7 @@ public class ReservaHotelController implements Initializable {
 
     private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
+
     @FXML
     private Label current_ventana_lbl;
 
@@ -115,6 +116,10 @@ public class ReservaHotelController implements Initializable {
 
     @FXML
     private Button gr_crear_btn;
+
+
+    @FXML
+    private Button gr_cancelar_btn;
 
     @FXML
     private TextArea gr_desc_lbl;
@@ -239,6 +244,54 @@ public class ReservaHotelController implements Initializable {
     private HashMap<String, String[]> mapaRegimenes;
     private Alert alert;
 
+
+
+    @FXML
+    void cancelarBtn(ActionEvent event) {
+        //validar que se haya seleccionado una reserva
+        if (reservaSeleccionada != null) {
+
+            try
+            {
+                String motivo = "";
+                //abrir ventana que permita ingresar un string motivo
+                TextInputDialog dialog = new TextInputDialog();
+                dialog.setTitle("Cancelacion de reserva");
+                dialog.setHeaderText("Por favor, ingrese el motivo de la cancelacion");
+                dialog.setContentText("Motivo:");
+                dialog.showAndWait();
+                motivo = dialog.getEditor().getText();
+
+                //cancelar reserva creando una nueva cancelacion hospedaje
+                CancelacionHospedaje cancelacionHospedaje = new CancelacionHospedaje(
+
+                        reservaSeleccionada.getIdReserva(),
+                        Date.valueOf(LocalDate.now()),
+                        0,
+                        motivo,
+                        7
+                );
+
+                cancelacionHospedajeRepo.save(cancelacionHospedaje);
+                //validar q no hayan errores al guardar la cancelacion
+
+
+                mostrarMensaje(VALIDACION_DATOS, VALIDACION_DATOS, "Reserva cancelada exitosamente",
+                        Alert.AlertType.INFORMATION);
+
+            }catch (Exception e){
+                mostrarMensaje(VALIDACION_DATOS, VALIDACION_DATOS, "Error al cancelar la reserva, no se pueden cancelar reservas que ya ocurrieron",
+                        Alert.AlertType.ERROR);
+            }
+
+        } else {
+            mostrarMensaje(VALIDACION_DATOS, VALIDACION_DATOS, "Por favor, seleccione una compra para cancelar",
+                    Alert.AlertType.WARNING);
+        }
+
+
+
+    }
 
     public void reservaHotelShowTableData() throws Exception {
         List<Object[]> results = reservaHotelRepo.buscarReservaHotel();
